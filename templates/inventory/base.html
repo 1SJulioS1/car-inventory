@@ -3,7 +3,15 @@
 <html lang="en">
 <head>
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-    <link href="{% static 'styles/bootstrap/css/bootstrap.min.css' %}">
+    
+    <!-- Bootstrap -->
+    <link href="{% static 'inventory/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link href="{% static 'inventory/css/gestion.css' %}" rel="stylesheet">
     <title>
         {% block title %}
         {% endblock %}
@@ -16,7 +24,29 @@
 </h1>
 
 <!-- Navbar -->
-
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="{% url 'inv:Home' %}">Gestión de Inventario y Ventas</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item {% if request.path == '/' %} active {% endif %} px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:Home' %}">Inicio</a>
+                </li>
+                <li class="nav-item {% if request.path == '/productos/' %} active {% endif %} px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:create_product' %}">Productos</a>
+                </li>
+                <li class="nav-item {% if request.path == '/almacen/' %} active {% endif %} px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:create_almacen' %}">Almacen</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav> 
 
 <!--Contenido cambiante-->
 
@@ -27,8 +57,11 @@
 <!-- Footer -->
 
 
+
+
 <!-- Bootstrap -->
-<script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/bootstrap/bootstrap.bundle.js' %}"></script>
+<script src="{% static 'inventory/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
 </body>
 </html>
