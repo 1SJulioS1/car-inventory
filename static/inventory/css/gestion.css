@@ -4,6 +4,7 @@ body {
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
+  color:white;
 }
 
 h1,
@@ -277,7 +278,7 @@ ul.errorlist{
   font-style: italic;
   color: red;
 }
-
+px
 .linksCategorias{
   color: white !important;
   text-decoration: underline;
@@ -293,4 +294,4 @@ ul.errorlist{
   margin: 10px auto;
   border-radius: 5px;
   padding: 1px 0px;
-}
+
