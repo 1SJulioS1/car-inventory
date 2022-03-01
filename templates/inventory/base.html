@@ -1,29 +1,31 @@
-<html>
-    <head>
-        
-        {% load static %}
+{% load static %}
 
-    </head>
+<html lang="en">
+<head>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link href="{% static 'styles/bootstrap/css/bootstrap.min.css' %}">
+    {% block title %}
+    {% endblock %}
+</head>
+<body>
 
-    <body>
-        
-        <h1 class="site-heading text-center text-white d-none d-lg-block">
-            <span class="site-heading-lower">Gestión de inventario</span>
-        </h1>
-        
-        <!-- Navbar -->
-        
-        
-        <!--Contenido cambiante-->
-        
-        {% block content %}
-        
-        {% endblock %}
-        
-        <!-- Footer -->
+<h1 class="site-heading text-center text-white d-none d-lg-block">
+    <span class="site-heading-lower">Gestión de inventario</span>
+</h1>
 
-        
-        <!-- Bootstrap -->
-        
-    </body>
+<!-- Navbar -->
+
+
+<!--Contenido cambiante-->
+
+{% block content %}
+
+{% endblock %}
+
+<!-- Footer -->
+
+
+<!-- Bootstrap -->
+
+</body>
 </html>

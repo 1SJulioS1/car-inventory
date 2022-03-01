@@ -1,7 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}
+    <title>Inventario de piezas</title>
+{% endblock %}
 
-<body>
-    <p>inicio</p>
-</body>
-</html>
+{% block content %}
+    Texto
+    <a type="button" href="{% url 'inv:create_product' %}">Crear Producto</a>
+    <a type="button" href="{% url 'inv:delete_product' %}">Eliminar Producto</a>
+    <a type="button" href="{% url 'inv:update_product' %}">Update Producto</a>
+    <a type="button" href="{% url 'inv:list_product' %}">Listar Producto</a>
+    <br>
+    <a type="button" href="{% url 'inv:create_almacen' %}">Crear Almacen</a>
+    <a type="button" href="{% url 'inv:delete_almacen' %}">Eliminar Almacen</a>
+    <a type="button" href="{% url 'inv:update_almacen' %}">Update Almacen</a>
+    <a type="button" href="{% url 'inv:list_almacen' %}">Listar Almacen</a>
+
+{% endblock %}
