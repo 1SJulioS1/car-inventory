@@ -1,6 +1,10 @@
+from bootstrap_datepicker_plus.widgets import DateTimePickerInput
+from crispy_forms.layout import *
+from crispy_forms.helper import *
+
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import *
 
 from .models import *
 
@@ -16,14 +20,14 @@ def movimiento(request):
 
 class ProductoCreateView(CreateView):
     model = Producto
-    fields = ['nombre', 'cantidad', 'almacen', 'fecha_entrada', 'precio']
+    fields = ['nombre', 'almacen', 'cantidad', 'fecha_entrada', 'precio_costo', 'precio_venta']
     template_name = 'inventory/producto/create_product.html'
     success_url = 'inv:list_product'
 
 
 class ProductoUpdateView(UpdateView):
     model = Producto
-    fields = ['nombre', 'cantidad', 'almacen', 'fecha_entrada', 'precio']
+    fields = ['nombre', 'cantidad', 'almacen', 'fecha_entrada', 'precio_costo', 'precio_venta']
     template_name = 'inventory/producto/update_product.html'
     success_url = 'inv:list_product'
 
