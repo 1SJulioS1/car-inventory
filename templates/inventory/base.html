@@ -4,8 +4,10 @@
 <head>
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <link href="{% static 'styles/bootstrap/css/bootstrap.min.css' %}">
-    {% block title %}
-    {% endblock %}
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
 </head>
 <body>
 
@@ -26,6 +28,7 @@
 
 
 <!-- Bootstrap -->
-
+<script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap/bootstrap.bundle.js' %}"></script>
 </body>
 </html>
