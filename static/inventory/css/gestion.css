@@ -208,8 +208,12 @@ p {
   font-size: 1.2rem;
 }
 .btn {
+<<<<<<< HEAD
   box-shadow: 0px 3px 3px 0px ;
   rgba(0, 123, 255);
+=======
+  box-shadow: 0px 3px 3px 0px rgba(0, 123, 255);
+>>>>>>> fcbc41f8f832eed5f308a5a50a58a34ed0eb7c26
 }
 .font-weight-light {
   font-weight: 100 !important;
