@@ -6,6 +6,9 @@
 
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
+    <!-- Font Awesome -->
+    <link href="{% static 'inventory/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+
     <!-- Bootstrap -->
     <link href="{% static 'inventory/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -13,6 +16,7 @@
     <link href="{% static 'inventory/css/gestion.css' %}" rel="stylesheet">
 
     <title>{% block title %}{% endblock %}</title>
+    
 </head>
 
 <body>
@@ -28,6 +32,27 @@
            href="{% url 'inv:Home' %}">Gestión de Inventario</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="dropdown show" id="navbarResponsive">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item {% if request.path == '/' %} active {% endif %} px-lg-4">
+                        <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:Home' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item dropdown {% if request.path == '/producto/' %} active {% endif %} px-lg-4">
+                            <a class="nav-link text-uppercase text-expanded dropdown-toggle"
+                        href="{% url 'inv:create_product' %}" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Producto</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-uppercase text-expanded" href="{% url 'inv:create_product' %}">crear</a>
+                            <a class="dropdown-item text-uppercase text-expanded" href="{% url 'inv:update_product' %}">modificar</a>
+                            <a class="dropdown-item text-uppercase text-expanded" href="{% url 'inv:delete_product' %}">eliminar</a>
+                            <a class="dropdown-item text-uppercase text-expanded" href="{% url 'inv:list_product' %}">listar</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown {% if request.path == '/almacen/' %} active {% endif %} px-lg-4">
+
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -36,6 +61,7 @@
                     <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:Home' %}">Inicio</a>
                 </li>
                 <li class="nav-item dropdown {% if request.path == '/producto/' %} active {% endif %} px-lg-4">
+
                     <a class="nav-link text-uppercase text-expanded dropdown-toggle"
                        href="{% url 'inv:create_product' %}" id="navbarDropdown" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Producto</a>
@@ -73,6 +99,17 @@
 
 {% endblock %}
 
+
+    <!-- Footer -->
+    <footer class="footer text-faded text-center py-5">
+        <div class="container">
+            <p class="m-0 mbt1">&copy; Gestión de Inventario 2022</p>
+        </div>
+    </footer>
+    <!-- Bootstrap -->
+    <script src="{% static 'inventory/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
 <!-- Footer -->
 <footer class="footer text-faded text-center py-5">
     <div class="container">
@@ -102,6 +139,7 @@
 <!-- Bootstrap -->
 <script src="{% static 'inventory/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
 
 </body>
 </html>
