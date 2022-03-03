@@ -2,17 +2,15 @@ import datetime
 
 from django.core.checks import messages
 from django.http import HttpResponseRedirect, JsonResponse
+
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import *
 from django.contrib.messages import *
 from .forms import *
 
-
-# Create your views here.
 def home(request):
     return render(request, "inventory/home.html")
-
 
 def product(request):
     producto = ProductoForm()
@@ -48,6 +46,7 @@ def product(request):
         return render(request, 'inventory/producto/create_product.html', context)
 
 
+
 class ProductoUpdateView(UpdateView):
     model = Producto
     fields = ['nombre', 'cantidad', 'fecha_entrada', 'precio_costo', 'precio_venta']
@@ -58,7 +57,7 @@ class ProductoUpdateView(UpdateView):
 class ProductoDeleteView(DeleteView):
     model = Producto
     template_name = 'inventory/producto/delete_product.html'
-    success_url = reverse_lazy('inv:list_product')
+    success_url = 'inv:list_product'
 
 
 class ProductoListView(ListView):
