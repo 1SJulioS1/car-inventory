@@ -1,231 +1,136 @@
-<html>
+<html lang="en">
 
 <head>
-
     {% load static %}
-
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-
     <!-- Font Awesome -->
     <link href="{% static 'inventory/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
-
     <!-- Bootstrap -->
     <link href="{% static 'inventory/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
     <!-- Styles -->
     <link href="{% static 'inventory/css/gestion.css' %}" rel="stylesheet">
-
     <title>{% block title %}{% endblock %}</title>
-
 </head>
 
 <body>
 
-    <h1 class="site-heading text-center text-white d-none d-lg-block">
-        <span class="site-heading-lower">Gestión de Inventario</span>
-    </h1>
+<h1 class="site-heading text-center text-white d-none d-lg-block">
+    <span class="site-heading-lower">Gestión de Inventario</span>
+</h1>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none"
-                href="{% url 'inv:Home' %}">Gestión de Inventario</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-<<<<<<< HEAD
-
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="dropdown show" id="navbarResponsive">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item {% if request.path == '/' %} active {% endif %} px-lg-4">
-                        <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:Home' %}">Inicio</a>
-                    </li>
-                    <li class="nav-item dropdown {% if request.path == '/producto/' %} active {% endif %} px-lg-4">
-                            <a class="nav-link text-uppercase text-expanded dropdown-toggle"
-                        href="{% url 'inv:create_product' %}" id="navbarDropdown" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Producto</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-uppercase text-expanded" href="{% url 'inv:create_product' %}">crear</a>
-
-                            <a class="dropdown-item text-uppercase text-expanded" href="{% url 'inv:list_product' %}">listar</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown {% if request.path == '/almacen/' %} active {% endif %} px-lg-4">
-
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item {% if request.path == '/' %} active {% endif %} px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:Home' %}">Inicio</a>
-                </li>
-                <li class="nav-item dropdown {% if request.path == '/producto/' %} active {% endif %} px-lg-4">
-
-                    <a class="nav-link text-uppercase text-expanded dropdown-toggle"
-                       href="{% url 'inv:create_product' %}" id="navbarDropdown" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">Producto</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item text-uppercase text-expanded" href="{% url 'inv:create_product' %}">crear</a>
-                        {#                            <a class="dropdown-item text-uppercase text-expanded" href="{% url 'inv:update_product' %}">modificar</a>#}
-                        {#                            <a class="dropdown-item text-uppercase text-expanded" href="{% url 'inv:delete_product' %}">eliminar</a>#}
-                        <a class="dropdown-item text-uppercase text-expanded"
-                           href="{% url 'inv:list_product' %}">listar</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown {% if request.path == '/almacen/' %} active {% endif %} px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded dropdown-toggle"
-                       href="{% url 'inv:create_almacen' %}" id="navbarDropdown" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">Almacen</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item text-uppercase text-expanded" href="{% url 'inv:create_almacen' %}">crear</a>
-                        {#                        <a class="dropdown-item text-uppercase text-expanded" href="{% url 'inv:update_almacen' %}">modificar</a>#}
-                        {#                        <a class="dropdown-item text-uppercase text-expanded" href="{% url 'inv:delete_almacen' %}">eliminar</a>#}
-                        <a class="dropdown-item text-uppercase text-expanded"
-                           href="{% url 'inv:list_almacen' %}">listar</a>
-                    </div>
-                </li>
-                <li class="nav-item {% if request.path == '/movimiento/' %} active {% endif %} px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:Movimiento' %}">Movimiento</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-=======
->>>>>>> fcbc41f8f832eed5f308a5a50a58a34ed0eb7c26
-
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="dropdown show" id="navbarResponsive">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item {% if request.path == '/' %} active {% endif %} px-lg-4">
-                        <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:Home' %}">Inicio</a>
-                    </li>
-                    <li class="nav-item dropdown {% if request.path == '/producto/' %} active {% endif %} px-lg-4">
-                        <a class="nav-link text-uppercase text-expanded dropdown-toggle"
-                            href="{% url 'inv:create_product' %}" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Producto</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-uppercase text-expanded"
-                                href="{% url 'inv:create_product' %}">crear</a>
-                            <!---<a class="dropdown-item text-uppercase text-expanded"
-                                href="{% url 'inv:update_product' %}">modificar</a>
-                            <a class="dropdown-item text-uppercase text-expanded"
-                                href="{% url 'inv:delete_product' %}">eliminar</a>-->
-                            <a class="dropdown-item text-uppercase text-expanded"
-                                href="{% url 'inv:list_product' %}">listar</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown {% if request.path == '/almacen/' %} active {% endif %} px-lg-4">
-                        <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarResponsive">
-                            <ul class="navbar-nav mx-auto">
-                                <li class="nav-item {% if request.path == '/' %} active {% endif %} px-lg-4">
-                                    <a class="nav-link text-uppercase text-expanded"
-                                        href="{% url 'inv:Home' %}">Inicio</a>
-                                </li>
-                                <li
-                                    class="nav-item dropdown {% if request.path == '/producto/' %} active {% endif %} px-lg-4">
-
-                                    <a class="nav-link text-uppercase text-expanded dropdown-toggle"
-                                        href="{% url 'inv:create_product' %}" id="navbarDropdown" role="button"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Producto</a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item text-uppercase text-expanded"
-                                            href="{% url 'inv:create_product' %}">crear</a>
-                                        {# <a class="dropdown-item text-uppercase text-expanded"
-                                            href="{% url 'inv:update_product' %}">modificar</a>#}
-                                        {# <a class="dropdown-item text-uppercase text-expanded"
-                                            href="{% url 'inv:delete_product' %}">eliminar</a>#}
-                                        <a class="dropdown-item text-uppercase text-expanded"
-                                            href="{% url 'inv:list_product' %}">listar</a>
-                                    </div>
-                                </li>
-                                <li
-                                    class="nav-item dropdown {% if request.path == '/almacen/' %} active {% endif %} px-lg-4">
-                                    <a class="nav-link text-uppercase text-expanded dropdown-toggle"
-                                        href="{% url 'inv:create_almacen' %}" id="navbarDropdown" role="button"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Almacen</a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item text-uppercase text-expanded"
-                                            href="{% url 'inv:create_almacen' %}">crear</a>
-                                        {# <a class="dropdown-item text-uppercase text-expanded"
-                                            href="{% url 'inv:update_almacen' %}">modificar</a>#}
-                                        {# <a class="dropdown-item text-uppercase text-expanded"
-                                            href="{% url 'inv:delete_almacen' %}">eliminar</a>#}
-                                        <a class="dropdown-item text-uppercase text-expanded"
-                                            href="{% url 'inv:list_almacen' %}">listar</a>
-                                    </div>
-                                </li>
-                                <li class="nav-item {% if request.path == '/movimiento/' %} active {% endif %} px-lg-4">
-                                    <a class="nav-link text-uppercase text-expanded"
-                                        href="{% url 'inv:Movimiento' %}">Movimiento</a>
-                                </li>
-                            </ul>
-                        </div>
+<!-- Navbar -->
+<div class="dropdown show" id="navbarResponsive">
+    <ul class="navbar-nav mx-auto">
+        <li class="nav-item {% if request.path == '/' %} active {% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:Home' %}">Inicio</a>
+        </li>
+        <li class="nav-item dropdown {% if request.path == '/producto/' %} active {% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded dropdown-toggle"
+               href="{% url 'inv:create_product' %}" id="navbarDropdown" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Producto</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item text-uppercase text-expanded"
+                   href="{% url 'inv:create_product' %}">crear</a>
+                <a class="dropdown-item text-uppercase text-expanded"
+                   href="{% url 'inv:list_product' %}">listar</a>
             </div>
-    </nav>
+        </li>
+        <li class="nav-item dropdown {% if request.path == '/almacen/' %} active {% endif %} px-lg-4">
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item {% if request.path == '/' %} active {% endif %} px-lg-4">
+                        <a class="nav-link text-uppercase text-expanded"
+                           href="{% url 'inv:Home' %}">Inicio</a>
+                    </li>
+                    <li
+                            class="nav-item dropdown {% if request.path == '/producto/' %} active {% endif %} px-lg-4">
 
-    <!--Contenido cambiante-->
+                        <a class="nav-link text-uppercase text-expanded dropdown-toggle"
+                           href="{% url 'inv:create_product' %}" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Producto</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-uppercase text-expanded"
+                               href="{% url 'inv:create_product' %}">crear</a>
+                            <a class="dropdown-item text-uppercase text-expanded"
+                               href="{% url 'inv:list_product' %}">listar</a>
+                        </div>
+                    </li>
+                    <li
+                            class="nav-item dropdown {% if request.path == '/almacen/' %} active {% endif %} px-lg-4">
+                        <a class="nav-link text-uppercase text-expanded dropdown-toggle"
+                           href="{% url 'inv:create_almacen' %}" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Almacen</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-uppercase text-expanded"
+                               href="{% url 'inv:create_almacen' %}">crear</a>
+                            <a class="dropdown-item text-uppercase text-expanded"
+                               href="{% url 'inv:list_almacen' %}">listar</a>
+                        </div>
+                    </li>
+                    <li class="nav-item {% if request.path == '/movimiento/' %} active {% endif %} px-lg-4">
+                        <a class="nav-link text-uppercase text-expanded"
+                           href="{% url 'inv:Movimiento' %}">Movimiento</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
 
-    {% block content %}
 
-<<<<<<< HEAD
-=======
-    {% endblock %}
+<!--Contenido cambiante-->
 
->>>>>>> fcbc41f8f832eed5f308a5a50a58a34ed0eb7c26
+{% block content %}
 
-    <!-- Footer -->
-    <footer class="footer text-faded text-center py-5">
-        <div class="container">
-            <p class="m-0 mbt1">&copy; Gestión de Inventario 2022</p>
-        </div>
-    </footer>
-    <!-- Bootstrap -->
-    <script src="{% static 'inventory/vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+{% endblock %}
 
-<<<<<<< HEAD
+<!-- Footer -->
+<footer class="footer text-faded text-center py-5">
+    <div class="container">
+        <p class="m-0 mbt1">&copy; Gestión de Inventario 2022</p>
+    </div>
+</footer>
+<!-- Bootstrap -->
+<script src="{% static 'inventory/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
 <!-- Footer -->
 <footer class="footer text-faded text-center py-5">
     <div class="container">
         <p class="m-0">
             <a href="#" class="link">
-=======
-    <!-- Footer -->
-    <footer class="footer text-faded text-center py-5">
-        <div class="container">
-            <p class="m-0">
-                <a href="#" class="link">
->>>>>>> fcbc41f8f832eed5f308a5a50a58a34ed0eb7c26
-                    <span class="fa-stack fa-lg">
-                        <i class="fa fa-circle fa-stack-2x"></i>
-                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                    </span>
-                </a>
-                <a href="#" class="link">
-                    <span class="fa-stack fa-lg">
-                        <i class="fa fa-circle fa-stack-2x"></i>
-                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                    </span>
-                </a>
-                <a href="#" class="link">
-                    <span class="fa-stack fa-lg">
-                        <i class="fa fa-circle fa-stack-2x"></i>
-                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                    </span>
-                </a>
-            </p>
-            <p class="m-0 mbt1">&copy; Gestión de Inventario 2022</p>
-        </div>
-    </footer>
-    <!-- Bootstrap -->
-    <script src="{% static 'inventory/vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+                =======
+                <!-- Footer -->
+                <footer class="footer text-faded text-center py-5">
+                    <div class="container">
+        <p class="m-0">
+            <a href="#" class="link">
 
+                <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                    </span>
+            </a>
+            <a href="#" class="link">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                    </span>
+            </a>
+            <a href="#" class="link">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                    </span>
+            </a>
+        </p>
+        <p class="m-0 mbt1">&copy; Gestión de Inventario 2022</p>
+    </div>
+</footer>
+<!-- Bootstrap -->
+<script src="{% static 'inventory/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
 
 </body>
