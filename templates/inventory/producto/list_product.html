@@ -1,10 +1,35 @@
 {% extends 'inventory/base.html' %}
-
 {% block title %}
     Listado de productos
 {% endblock %}
 
 
 {% block content %}
+    <div class=" row ">
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <h1>Instrumentos</h1>
+        </div>
 
+        <div class="col-3 d-flex align-items-center justify-content-center">
+            <div class="card-body">
+                <div class="table-responsive bg-dark">
+                    <table class="table  table-striped table-hover" id="dataTable"
+                           role="grid" aria-describedby="dataTable_info">
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Cantidad total</th>
+                        </tr>
+                        </thead>
+                        {% for f in object %}
+                            <tr>
+                                <td><a >{{ f.nombre }}</a></td>
+                                <td><a >{{ f.cantidad }}</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

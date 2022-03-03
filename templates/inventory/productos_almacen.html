@@ -1,13 +1,13 @@
 {% extends 'inventory/base.html' %}
+
 {% block title %}
-    Listado de almacenes
+    Productos por almacén
 {% endblock %}
 
 {% block content %}
-
     <div class=" row ">
         <div class="col-6 d-flex align-items-center justify-content-center">
-            <h1>Almacenes</h1>
+            <h1>Productos del almacén {{ almacen }}</h1>
         </div>
 
         <div class="col-3 d-flex align-items-center justify-content-center">
@@ -18,12 +18,16 @@
                         <thead>
                         <tr>
                             <th>Nombre</th>
+                            <th>Cantidad</th>
                         </tr>
                         </thead>
-                        {% for f in object %}
+                        {% for prod, cant in content.items %}
                             <tr>
                                 <td>
-                                    <a href="{% url 'inv:products_instruments' f.id %}">{{ f.nombre }}</a>
+                                    <a>{{ prod }}</a>
+                                </td>
+                                <td>
+                                    <a>{{ cant }}</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -32,6 +36,5 @@
             </div>
         </div>
     </div>
-
 
 {% endblock %}
