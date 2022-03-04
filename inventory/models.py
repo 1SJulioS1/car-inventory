@@ -19,7 +19,7 @@ class Producto(models.Model):
 
 class Almacen(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
-    productos = models.ManyToManyField("Producto", through="Existencia")
+    es_central = models.TextField(max_length=20, null=False, blank=False)
 
     def __str__(self):
         return self.nombre

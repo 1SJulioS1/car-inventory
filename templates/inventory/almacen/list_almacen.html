@@ -17,7 +17,8 @@
                     <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Ac</th>
+                        <th>Tipo</th>
+
                     </tr>
                     </thead>
                     {% for f in object %}
@@ -26,11 +27,7 @@
                                 <a href="{% url 'inv:products_instruments' f.id %}">{{ f.nombre }}</a>
                             </td>
                             <td>
-                                <button class="btn-danger btn-sm ">
-                                    <i class="fa-remove" href="{% url 'inv:products_instruments' f.id %}"></i>
-                                </button>
-
-                                <i class="fa-refresh" href="{% url 'inv:products_instruments' f.id %}"></i>
+                                {{ f.es_central }}
                             </td>
                         </tr>
                     {% endfor %}

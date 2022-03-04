@@ -9,7 +9,21 @@
     <div class="intro-text left-0 text-center bg-faded p-5 rounded">
         <div class=" row ">
             <div class="col-6 d-flex align-items-center justify-content-center">
-                <h1 class="">Agregar producto</h1>
+                <h1 class="">
+                    {% if msg == 'update' %}
+                        Actualizar
+                    {% else %}
+                        Agregar
+                    {% endif %}
+                    producto
+                </h1>
+                {% if  msg == 'true' %}
+                    <div class="row d-flex align-items-center justify-content-center">
+                        <div class="col-6">
+                            Producto ya existente en el almacén seleccionado
+                        </div>
+                    </div>
+                {% endif %}
             </div>
 
 
@@ -31,9 +45,13 @@
 
                         </div>
                         <div class="row">
-                            <div class="form-group col-5">
+                            <div class="form-group col-3">
                                 <label for="fecha">Fecha</label>
                                 {{ form.fecha_entrada }}
+                            </div>
+                            <div class="form-group col-3">
+                                <label for="fecha">Destino</label>
+                                {{ form.almacen_central }}
                             </div>
                         </div>
 
@@ -55,6 +73,7 @@
 
                 </div>
             </div>
+
         </div>
     </div>
 

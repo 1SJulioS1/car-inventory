@@ -1,5 +1,5 @@
 {% extends 'inventory/base.html' %}
-{%load crispy_forms_tags%}
+{% load crispy_forms_tags %}
 {% block title %}
     Crear almacén
 {% endblock %}
@@ -14,7 +14,19 @@
             <div class="container">
                 <form id="form-default" method="post">
                     {% csrf_token %}
-                    {% crispy form %}
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="fecha">Nombre</label>
+                            {{ form.nombre }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="precio-costo">Tipo de almacén</label>
+                            {{ form.es_central }}
+                        </div>
+                    </div>
                 </form>
                 <button class="btn btn-success" form="form-default" type="submit">Agregar</button>
             </div>

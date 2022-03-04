@@ -51,6 +51,12 @@ class ProductoForm(forms.ModelForm):
             }
         )
     )
+    almacen_central = forms.ModelChoiceField(
+        queryset=Almacen.objects.all().filter(es_central='Almacén central'),
+        widget=forms.Select(attrs={
+            'class': 'form-control'
+        })
+    )
 
     class Meta:
         model = Producto
@@ -58,19 +64,17 @@ class ProductoForm(forms.ModelForm):
 
 
 class AlmacenForm(forms.ModelForm):
-    nombre = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control',
-                'name': 'nombre_producto',
-                'id': 'nombre'
-            }
-        )
-    )
-
     class Meta:
+        ES_CENTRAL_CHOICES = [
+            ('Punto de venta', 'Punto de venta'),
+            ('Almacén central', 'Almacen central')
+        ]
         model = Almacen
         fields = '__all__'
+        widgets = {
+            'es_central': forms.Select(choices=ES_CENTRAL_CHOICES, attrs={'class': 'form-control'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'name': 'nombre_producto', 'id': 'nombre'})
+        }
 
 
 class MovimientoForm(forms.ModelForm):
