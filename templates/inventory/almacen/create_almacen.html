@@ -11,24 +11,27 @@
         </div>
 
         <div class="col-3 d-flex align-items-center justify-content-center">
-            <div class="container">
+            <div class="container f_back">
                 <form id="form-default" method="post">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="form-group col-6">
+                        <div class="form-group col-8">
                             <label for="fecha">Nombre</label>
                             {{ form.nombre }}
                         </div>
                     </div>
-
                     <div class="row">
-                        <div class="form-group col-6">
+                        <div class="form-group col-8">
                             <label for="precio-costo">Tipo de almacén</label>
                             {{ form.es_central }}
                         </div>
                     </div>
+                    <div class="form-actions right">
+                        <button class="btn btn-success" form="form-default" type="submit">Agregar</button>
+                    </div>
+                    
                 </form>
-                <button class="btn btn-success" form="form-default" type="submit">Agregar</button>
+                
             </div>
         </div>
     </div>
