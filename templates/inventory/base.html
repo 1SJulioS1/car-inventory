@@ -4,9 +4,16 @@
     {% load static %}
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <!-- Font Awesome -->
-    <link href="{% static 'inventory/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'inventory/vendor/fontawesome-free/css/fontawesome.min.css' %}" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="{% static 'inventory/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="{% static 'inventory/vendor/dataTables-1.11.5/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+    <link href="{% static 'inventory/vendor/dataTables-1.11.5/plugins/AutoFill-2.3.7/css/autoFill.bootstrap4.min.css' %}"
+          rel="stylesheet">
+    <link href="{% static 'inventory/vendor/dataTables-1.11.5/plugins/Responsive-2.2.9/css/responsive.bootstrap4.min.css' %}"
+          rel="stylesheet">
+
     <!-- Styles -->
     <link href="{% static 'inventory/css/gestion.css' %}" rel="stylesheet">
     <title>{% block title %}{% endblock %}</title>
@@ -14,80 +21,72 @@
 
 <body>
 
-    <h1 class="site-heading text-right text-white d-none d-lg-block">
-        <span class="site-heading-lower">Gestión de Inventario</span>
-    </h1>
+<h1 class="site-heading text-right text-white d-none d-lg-block">
+    <span class="site-heading-lower">Gestión de Inventario</span>
+</h1>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark py-lg-4 " id="mainNav">
-        <div class="container">
-            <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none"
-                href="{% url 'inv:Home' %}">Gestión de Inventario</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+<nav class="navbar navbar-expand-lg navbar-dark py-lg-4 " id="mainNav">
+    <div class="container">
+        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none"
+           href="{% url 'inv:Home' %}">Gestión de Inventario</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="dropdown show" id="navbarResponsive">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item px-lg-4">
-                        <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:Home' %}">Inicio</a>
-                    </li>
-                    <li class="nav-item dropdown px-lg-4">
-                        <a class="nav-link text-uppercase text-expanded dropdown-toggle"
-                            href="{% url 'inv:create_product' %}" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Producto</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-uppercase text-expanded"
-                                href="{% url 'inv:create_product' %}">crear</a>
-                            
-                                <!--aqui va modificar y eliminar productos-->
-                            
-                            <a class="dropdown-item text-uppercase text-expanded"
-                                href="{% url 'inv:list_product' %}">listar</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown px-lg-4">
-                        <a class="nav-link text-uppercase text-expanded dropdown-toggle"
-                            href="{% url 'inv:create_almacen' %}" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Almacen</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-uppercase text-expanded"
-                                href="{% url 'inv:create_almacen' %}">crear</a>
-                            
-                                <!--aqui va eliminar almacen-->
-                            
-                            <a class="dropdown-item text-uppercase text-expanded"
-                                href="{% url 'inv:list_almacen' %}">listar</a>
-                        </div>
-                    </li>
-                    <li class="nav-item px-lg-4">
-                        <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:Movimiento' %}">Movimiento</a>
-                    </li>
-
-                    <!--faltaria para la url inst-almacen estas son las que dan el error-->
-
-                </ul>
-            </div>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="dropdown show" id="navbarResponsive">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:Home' %}">Inicio</a>
+                </li>
+                <li class="nav-item dropdown px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded dropdown-toggle"
+                       href="{% url 'inv:create_product' %}" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Producto</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item text-uppercase text-expanded"
+                           href="{% url 'inv:create_product' %}">crear</a>
+                        <a class="dropdown-item text-uppercase text-expanded"
+                           href="{% url 'inv:list_product' %}">listar</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded dropdown-toggle"
+                       href="{% url 'inv:create_almacen' %}" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Almacen</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item text-uppercase text-expanded"
+                           href="{% url 'inv:create_almacen' %}">crear</a>
+                        <a class="dropdown-item text-uppercase text-expanded"
+                           href="{% url 'inv:list_almacen' %}">listar</a>
+                    </div>
+                </li>
+                <li class="nav-item px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:Movimiento' %}">Movimiento</a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!--Contenido cambiante-->
+{% block content %}
 
-    {% block content %}
+{% endblock %}
 
-    {% endblock %}
+<footer class="footer text-faded text-center py-5">
+    <div class="container">
+        <p class="m-0 mbt1">&copy; Gestión de Inventario 2022</p>
+    </div>
+</footer>
 
-    <!-- Footer -->
-    <footer class="footer text-faded text-center py-5">
-        <div class="container">
-            <p class="m-0 mbt1">&copy; Gestión de Inventario 2022</p>
-        </div>
-    </footer>
-    <!-- Bootstrap -->
-    <script src="{% static 'inventory/vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/dataTables-1.11.5/js/jquery.dataTables.js' %}"></script>
+<script src="{% static 'inventory/vendor/dataTables-1.11.5/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/dataTables-1.11.5/plugins/Responsive-2.2.9/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/dataTables-1.11.5/plugins/Responsive-2.2.9/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/dataTables-1.11.5/plugins/AutoFill-2.3.7/js/autoFill.bootstrap4.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/dataTables-1.11.5/plugins/AutoFill-2.3.7/js/dataTables.autoFill.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/custom.js' %}"></script>
 
-    
 </body>
-
 </html>

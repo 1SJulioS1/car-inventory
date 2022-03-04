@@ -155,7 +155,12 @@ def movimiento(request):
                     e.cantidad += int(cantidad)
                     e.save()
                     return render(request, 'inventory/almacen/create_almacen.html', context)
-                # elif:
+                elif Existencia.objects.filter(almacen=destino.id,producto=producto.id).count()==0:
+                    e = Existencia.objects.get(almacen=origen.id, producto=producto.id)
+                    e.cantidad -= int(cantidad)
+                    e.save()
+                    e = Existencia.objects.get(almacen=origen.id, producto=producto.id,cantidad=cantidad)
+                    e.save()
                 else:
                     context['mess'] = 'err'
                     return render(request, 'inventory/movimiento.html', context)
