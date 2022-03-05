@@ -1,3 +1,18 @@
+.custom-imput-file{
+  background-color: rgb(0, 153, 255, 0.6);
+  color: #ffffff;
+  cursor: pointer;
+  margin: auto;
+  position: relative;
+  text-align: center;
+  border-radius: 5px ;
+}
+.custom-imput-file .input-file{
+  border: #ffffff;
+  cursor: pointer;
+  margin: auto;
+  position:absolute
+}
 .f_back{
   background-color: rgb(0, 153, 255, 0.6);
   margin-top: 2rem;
@@ -223,7 +238,8 @@ a{
   box-shadow: 1px 1px 1px 1px rgba(255, 255, 255, 0.6);
   font-family:Arial, Helvetica, sans-serif;
   color: #ffffff;
-  margin-bottom: 2px;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 .font-weight-light {
   font-weight: 100 !important;
