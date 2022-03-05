@@ -37,7 +37,7 @@ class Existencia(models.Model):
     class Meta:
         verbose_name_plural = "Existencia"
         verbose_name = "Existencias"
-        unique_together = ['almacen', 'producto']
+
 
 
 class Movimiento(models.Model):
@@ -57,5 +57,7 @@ class Ventas(models.Model):
     existencia = models.ForeignKey("Existencia", on_delete=models.DO_NOTHING)
 
     class Meta:
-        verbose_name_plural = "Existencia"
-        verbose_name = "Existencias"
+        verbose_name_plural = "Ventas"
+        verbose_name = "Venta"
+
+

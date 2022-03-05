@@ -1,14 +1,13 @@
 import datetime
-from distutils.command.install_data import install_data
+import os
 
-from django.core.checks import messages
-from django.http import HttpResponseRedirect, JsonResponse
-
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import *
-from django.contrib.messages import *
 from .forms import *
+from django.shortcuts import render
+from django.core.files.storage import FileSystemStorage
+import json
 
 
 def home(request):
@@ -153,9 +152,14 @@ def movimiento(request):
                     e = Existencia.objects.get(almacen=origen.id, producto=producto.id)
                     e.cantidad -= int(cantidad)
                     e.save()
-                    e = Existencia.objects.get(almacen=destino.id, producto=producto.id).cantidad
-                    e.cantidad += int(cantidad)
-                    e.save()
+                    if Existencia.objects.filter(almacen=destino.id, producto=producto.id).count() == 0:
+                        print("No existe producto en el almacen")
+                        e = Existencia(almacen=destino, producto=producto, cantidad=cantidad)
+                        e.save()
+                    else:
+                        e = Existencia.objects.get(almacen=destino.id, producto=producto.id).cantidad
+                        e.cantidad += int(cantidad)
+                        e.save()
                     try:
                         mov_instance.save()
                         return HttpResponseRedirect(reverse('inv:list_almacen'))
@@ -167,12 +171,6 @@ def movimiento(request):
                     e.cantidad += int(cantidad)
                     e.save()
                     return render(request, 'inventory/almacen/create_almacen.html', context)
-                elif Existencia.objects.filter(almacen=destino.id, producto=producto.id).count() == 0:
-                    e = Existencia.objects.get(almacen=origen.id, producto=producto.id)
-                    e.cantidad -= int(cantidad)
-                    e.save()
-                    e = Existencia(almacen=origen.id, producto=producto.id, cantidad=cantidad)
-                    e.save()
                 else:
                     context['mess'] = 'err'
                     return render(request, 'inventory/movimiento.html', context)
@@ -181,3 +179,42 @@ def movimiento(request):
     else:
         print("GET")
         return render(request, "inventory/movimiento.html", context)
+
+
+def import_venta(request):
+    if request.method == 'GET':
+        return render(request, 'inventory/ventas.html')
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        files = os.listdir('D:\\Work\Inventario de piezas\\car-inventory\\media\\')
+        if myfile.name not in files:
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            f = open('D:\\Work\Inventario de piezas\\car-inventory\\media\\' + myfile.name)
+            data = json.load(f)
+            print(type(data))
+            fecha_no_f = myfile.name.split('#')[0].split("-")
+            anho = int(fecha_no_f[0])
+            mes = int(fecha_no_f[1])
+            dia = int(fecha_no_f[2])
+            fecha = datetime.datetime(anho, mes, dia),
+
+            almacen = f.name.split('#')[1].split(".")[0]
+
+            for key, value in data.items():
+                almacen = Almacen.objects.get(nombre=almacen)
+                producto = Producto.objects.get(nombre=key)
+                producto.cantidad -= int(value)
+                producto.save()
+                e = Existencia.objects.get(almacen=almacen.id, producto=producto.id)
+                e.cantidad -= int(value)
+                e.save()
+                v = Ventas(existencia=e, fecha=datetime.date(anho, mes, dia), cantidad=int(value))
+                try:
+                    v.save()
+                    return render(request, 'inventory/ventas.html', {'msg': 'good'})
+                except:
+                    pass
+    else:
+        print("Venta existente")
+        return render(request, 'inventory/ventas.html', {'msg': 'error'})
