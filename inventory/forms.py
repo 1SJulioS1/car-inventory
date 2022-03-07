@@ -153,5 +153,3 @@ class VentasPeriodoForm(forms.Form):
                    }
         )
     )
-
-    
