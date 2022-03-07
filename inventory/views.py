@@ -1,5 +1,6 @@
 import datetime
 import os
+from pathlib import Path
 from shutil import copytree, copy, copy2, rmtree
 from pathlib import Path
 from django.http import HttpResponseRedirect
@@ -11,6 +12,9 @@ from django.core.files.storage import FileSystemStorage
 import json
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
 
 
 def home(request):
@@ -260,5 +264,4 @@ def ventas_periodo(request):
             return render(request,'inventory/ventas/reporte_ventas.html',context)
     else:
         context['msg'] = 'form_request'
-        form_ventas_periodo = VentasPeriodoForm()
         return render(request,'inventory/ventas/reporte_ventas.html',context)
