@@ -4,35 +4,34 @@
 {% endblock %}
 
 {% block content %}
-    <div class="intro-text left-0 text-center bg-faded p-5 rounded">
-        <div class=" row ">
-            <div class="col-6 d-flex align-items-center justify-content-center">
-                <h1>
-                    Agregar Venta
-                </h1>
-                <div class="col-6 d-flex align-items-center justify-content-center">
-                    {% if msg == 'good' %}
-                        <p>Venta agregada</p>
-                    {% endif %}
-                    {% if msg == 'error' %}
-                        <p>Ha seleccionado una venta ya agregada<br>Seleccione una no existente</p>
-                    {% endif %}
-                </div>
-            </div>
-
-
+<div class=" row ">
+    <div class="col-5 d-flex align-items-center justify-content-center">
+        <h1>
+            Agregar Venta
+        </h1>
+    </div>
+    <div class="col-4 d-flex align-items-center justify-content-center">
+        <div class="container f_back">
             <div class="col-4 d-flex align-items-center justify-content-center">
-                <div class="container">
+                {% if msg == 'good' %}
+                    <p>Venta agregada</p>
+                {% endif %}
+                {% if msg == 'error' %}
+                    <p>Ha seleccionado una venta ya agregada<br>Seleccione una no existente</p>
+                {% endif %}
+            </div>
+            <div class="d-flex align-items-center justify-content-center">
+                <div class="form-actions right">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <input type="file" name="myfile">
-                        <button type="submit">Upload</button>
+                        <input type="file"  name="myfile">
+                        <button class="btn" type="submit">Upload</button>
                     </form>
-                </div>
+                </div>               
             </div>
-
-        </div>
+        </div>              
     </div>
+</div>
 
 
 {% endblock %}

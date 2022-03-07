@@ -1,5 +1,7 @@
 import datetime
 import os
+from pathlib import Path
+
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
@@ -8,6 +10,9 @@ from .forms import *
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 import json
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 def home(request):
@@ -186,11 +191,11 @@ def import_venta(request):
         return render(request, 'inventory/ventas.html')
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
-        files = os.listdir('D:\\Work\Inventario de piezas\\car-inventory\\media\\')
+        files = os.listdir(MEDIA_ROOT)
         if myfile.name not in files:
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
-            f = open('D:\\Work\Inventario de piezas\\car-inventory\\media\\' + myfile.name)
+            f = open(os.path.join(MEDIA_ROOT, myfile.name))
             data = json.load(f)
             print(type(data))
             fecha_no_f = myfile.name.split('#')[0].split("-")
