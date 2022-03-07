@@ -25,5 +25,7 @@ urlpatterns = [
     path('movimiento/', views.movimiento, name='Movimiento'),
     path('importar-venta/', views.import_venta, name='import_selling'),
     path('producto/', include(producto)),
-    path('almacen/', include(almacen))
+    path('almacen/', include(almacen)),
+    path('backup/', views.backup, name='backup'),
+    path("ventas_periodo_form/", views.ventas_periodo, name="selling_period_form")
 ]

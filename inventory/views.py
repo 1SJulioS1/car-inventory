@@ -1,8 +1,7 @@
 import datetime
 import os
+from shutil import copytree, copy, copy2, rmtree
 from pathlib import Path
-
-
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import *
@@ -10,7 +9,6 @@ from .forms import *
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 import json
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -188,7 +186,7 @@ def movimiento(request):
 
 def import_venta(request):
     if request.method == 'GET':
-        return render(request, 'inventory/ventas.html')
+        return render(request, 'inventory/ventas/ventas.html')
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         files = os.listdir(MEDIA_ROOT)
@@ -214,12 +212,53 @@ def import_venta(request):
                 e = Existencia.objects.get(almacen=almacen.id, producto=producto.id)
                 e.cantidad -= int(value)
                 e.save()
-                v = Ventas(existencia=e, fecha=datetime.date(anho, mes, dia), cantidad=int(value))
+                v = Ventas(existencia=e, fecha=datetime.date(anho, mes, dia), cantidad=int(value))                
                 try:
                     v.save()
-                    return render(request, 'inventory/ventas.html', {'msg': 'good'})
+                    return render(request, 'inventory/ventas/ventas.html', {'msg': 'good'})
                 except:
                     pass
     else:
         print("Venta existente")
-        return render(request, 'inventory/ventas.html', {'msg': 'error'})
+        return render(request, 'inventory/ventas/ventas.html', {'msg': 'error'})
+
+def backup(request):
+    db_source = 'D:\\Work\Inventario de piezas\\car-inventory\\db.sqlite3'
+    registro = 'D:\\Work\Inventario de piezas\\car-inventory\\media\\'
+    destination_dir = 'C:\\Users\\s&\\Documents\\Backup\\'
+    try:
+        copytree(registro, destination_dir, symlinks=False, ignore=None, copy_function=copy2,
+                 ignore_dangling_symlinks=False, dirs_exist_ok=False)
+    except FileExistsError:
+        rmtree('C:\\Users\\s&\\Documents\\Backup')
+        copytree(registro, destination_dir, symlinks=False, ignore=None, copy_function=copy2,
+                 ignore_dangling_symlinks=False, dirs_exist_ok=False)
+    copy(db_source, destination_dir)
+    return render(request, 'inventory/backup_done.html')
+
+
+def ventas_periodo(request):
+    periodos = VentasPeriodoForm()
+    context = {
+        'form': periodos,
+        'msg':'',
+        'data':''
+    }
+    if request.method == 'POST':
+        form_ventas_periodo = VentasPeriodoForm(request.POST)
+        if form_ventas_periodo.is_valid():
+            fecha_inicio_raw = form_ventas_periodo.cleaned_data['fecha_inicio']
+            fecha_fin_raw = form_ventas_periodo.cleaned_data['fecha_fin']
+            ventas = Ventas.objects.filter(fecha__range=[fecha_inicio_raw,fecha_fin_raw])                        
+            data  = []            
+            for i in ventas:
+                e = Existencia.objects.get(id = i.existencia.id)
+                prod = e.producto
+                alm = e.almacen
+                data.append([i.fecha,alm,prod,i.cantidad])
+            context['data'] = data
+            return render(request,'inventory/ventas/reporte_ventas.html',context)
+    else:
+        context['msg'] = 'form_request'
+        form_ventas_periodo = VentasPeriodoForm()
+        return render(request,'inventory/ventas/reporte_ventas.html',context)

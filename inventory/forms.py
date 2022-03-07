@@ -132,3 +132,26 @@ class FileUploadForm(forms.Form):
         if instance:
             instance.save()
         return instance
+
+class VentasPeriodoForm(forms.Form):
+    fecha_inicio = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'type': 'date',
+                   'class': 'form-control',
+                   'id': 'fecha_inicio',
+                   'placeholder': 'Fecha de inicio'
+                   }
+        )
+    )
+
+    fecha_fin = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'type': 'date',
+                   'class': 'form-control',
+                   'id': 'fecha_fin',
+                   'placeholder': 'Fecha de fin'
+                   }
+        )
+    )
+
+    

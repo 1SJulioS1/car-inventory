@@ -62,13 +62,31 @@
                                 href="{% url 'inv:list_almacen' %}">listar</a>
                         </div>
                     </li>
-                    <li class="nav-item px-lg-4">
-                        <a class="nav-link text-uppercase text-expanded"
-                            href="{% url 'inv:Movimiento' %}">Movimientos</a>
+                    <li class="nav-item dropdown px-lg-4">
+                        <a class="nav-link text-uppercase text-expanded dropdown-toggle"
+                           href="{% url 'inv:create_almacen' %}" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Operaciones</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-uppercase text-expanded"
+                               href="{% url 'inv:import_selling' %}">Recepción</a>
+                            <a class="dropdown-item text-uppercase text-expanded">Venta</a>
+                            <a class="dropdown-item text-uppercase text-expanded"
+                               href="{% url 'inv:Movimiento' %}">Transferencia</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown px-lg-4">
+                        <a class="nav-link text-uppercase text-expanded dropdown-toggle"
+                           href="{% url 'inv:create_almacen' %}" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Informes</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-uppercase text-expanded"
+                            href="{% url 'inv:selling_period_form' %}">Ventas por período</a>
+                            <a class="dropdown-item text-uppercase text-expanded"
+                               href="{% url 'inv:list_product' %}">Lista de productos</a>
+                        </div>
                     </li>
                     <li class="nav-item px-lg-4">
-                        <a class="nav-link text-uppercase text-expanded"
-                            href="{% url 'inv:import_selling' %}">Ventas</a>
+                        <a class="nav-link text-uppercase text-expanded" href="{% url 'inv:backup' %}">Respaldo</a>
                     </li>
                 </ul>
             </div>
@@ -82,11 +100,7 @@
     <footer class="footer text-faded text-center py-5">
         <div class="container">
             <p class="m-0 mbt1">&copy; Gestión de Inventario <span id="year"></span></p>
-            <script>
-                const fecha = new Date();
-                const añoActual = fecha.getFullYear();
-                document.getElementById('year').innerText=`${añoActual}`;
-            </script>
+            {% now %Y %}
         </div>
     </footer>
 
