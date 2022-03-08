@@ -73,7 +73,7 @@ a{
 .intro {
   position: relative;
 }
-@media (min-width: 992px) {
+@media (min-width: 772px) {
   .intro .intro-img {
     width: 75%;
     float: left;
