@@ -12,10 +12,11 @@
         <h1>Ventas por periodo</h1>
     </div>
     <div class="col-4 d-flex align-items-center justify-content-center">
-        <div class="card-body f_back">
+        <div class="card-body">
             <form id="form-default" method="post">
                 {% csrf_token %}
-                {% if msg == 'form_request' %}                
+                {% if msg == 'form_request' %}  
+                <div class=" card-body f_back">
                 <div class="row">
                     <div class="form-group col-5">
                         <label for="id_fecha_inicio">Fecha de inicio</label>
@@ -33,6 +34,8 @@
                         <button id="confirmar" type="submit" class="btn green">Agregar</button>
                     </div>
                 </div>
+                </div>              
+                
                 {% else %}
                 <div class="col-4 d-flex align-items-center justify-content-center">
                     <div class="card-body" >
