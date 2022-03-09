@@ -1,0 +1,322 @@
+[33mcommit 78b6383eb36d069e28903e8f0a4e68f114116447[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31mcar-inventory/master[m[33m)[m
+Author: Siles <sjsiless@gmail.com>
+Date:   Tue Mar 8 15:05:43 2022 +0100
+
+    backup fixed
+
+[33mcommit b7c8c2f587453fe325dec7fb6f531ecf3be54227[m
+Merge: 39d6bb3 9197f7d
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Tue Mar 8 15:03:58 2022 +0100
+
+    Merge pull request #11 from lilicruz9011/master
+    
+    arreglo
+
+[33mcommit 9197f7df0b96071ae3788d279031006f01981e0a[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Tue Mar 8 08:59:35 2022 -0500
+
+    arreglo
+
+[33mcommit 39d6bb373551886fa2f10cf299e77b5c36caa32a[m
+Merge: 87d00ee 5a9493b
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Mon Mar 7 18:06:45 2022 +0100
+
+    Merge pull request #10 from lilicruz9011/master
+    
+    primera propuesta
+
+[33mcommit 5a9493b337de80de737a4a999f39b4a09f51bbcc[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Mon Mar 7 12:02:03 2022 -0500
+
+    primera propuesta OK
+
+[33mcommit 58cb5c194bfd3807448010059d88617ec7ae3a23[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Mon Mar 7 10:55:56 2022 -0500
+
+    primera propuesta
+
+[33mcommit 87d00ee98b84df41a895981d203dbff376ea12f2[m
+Author: s& <sjsiless@gmail.com>
+Date:   Mon Mar 7 09:51:22 2022 -0500
+
+    agregada ventas
+
+[33mcommit 78687743075de36d2f9e578097e7c79f9c7e7e41[m
+Merge: 2448341 a249768
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Mon Mar 7 02:37:10 2022 +0100
+
+    Merge pull request #9 from lilicruz9011/master
+    
+    cambios en directorio absoluto de views, formato uniforme y fecha del…
+
+[33mcommit a249768c0d5adf29f240d296aca78c3f5f212a0f[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Sat Mar 5 13:37:27 2022 -0500
+
+    cambios en directorio absoluto de views, formato uniforme y fecha del sistema
+
+[33mcommit 2448341cb6300365658425e26f0041d4c68af89f[m
+Merge: 71c1ecf cf04bdd
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Sat Mar 5 13:43:24 2022 +0100
+
+    Merge pull request #8 from lilicruz9011/master
+    
+    formato de tablas
+
+[33mcommit 71c1ecf8f5616ff98baec3878602424bd82b20ce[m
+Author: Siles <sjsiless@gmail.com>
+Date:   Sat Mar 5 12:41:47 2022 +0100
+
+    ventas agregadas
+
+[33mcommit cf04bdd4cab3f3d12d33b96051a5d4eb120fd873[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Fri Mar 4 17:20:09 2022 -0500
+
+    formato de tablas
+
+[33mcommit 7f7187f7d0dcdf3bd8351dae703e0da4ee27e72e[m
+Author: Siles <sjsiless@gmail.com>
+Date:   Fri Mar 4 16:55:00 2022 +0100
+
+    producto creado fixed, actualizacion de producto añadida, datatable actualizado
+
+[33mcommit 0fa455c65ab9ed6a74d8bc9b10b9fe814ec8ac65[m
+Author: Siles <sjsiless@gmail.com>
+Date:   Fri Mar 4 13:56:29 2022 +0100
+
+    added datatables
+
+[33mcommit 51299cdd51e6efbff40684708ea441464c1a9c9d[m
+Merge: 39dfccd 92fbdb7
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Fri Mar 4 08:38:09 2022 +0100
+
+    Merge pull request #7 from lilicruz9011/master
+    
+    arreglos en base
+
+[33mcommit 92fbdb7827bcd9741fb98494ac5e1956cf66cc6c[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Thu Mar 3 18:58:45 2022 -0500
+
+    base
+
+[33mcommit 39dfccd8a90c9b2e70323b2da6a3122cdcfcd510[m
+Author: Siles <sjsiless@gmail.com>
+Date:   Thu Mar 3 20:55:19 2022 +0100
+
+    fixed
+
+[33mcommit ed175c75fbe11f1c29e70f08ef95ae3cddc189d8[m
+Merge: 5c73c99 fcbc41f
+Author: Siles <sjsiless@gmail.com>
+Date:   Thu Mar 3 20:34:56 2022 +0100
+
+    test-commit
+
+[33mcommit fcbc41f8f832eed5f308a5a50a58a34ed0eb7c26[m
+Merge: 34ebb76 52e6f98
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Thu Mar 3 15:13:41 2022 -0500
+
+    Merge pull request #6 from lilicruz9011/master
+    
+    fhgftgft
+
+[33mcommit 52e6f98b02d158ba6500239433a982360d73f0be[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Thu Mar 3 15:07:40 2022 -0500
+
+    fhgftgft
+
+[33mcommit 34ebb76b3360f3d7014f9933874c6e3c4c878b94[m
+Merge: 81dcf45 b03f831
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Thu Mar 3 14:39:48 2022 -0500
+
+    Merge pull request #5 from lilicruz9011/master
+    
+    cambio imagen de fondo, dropdawn, estilos
+
+[33mcommit b03f831bb55ad6a3dab0d3bab07c27067316d437[m
+Merge: 1bd8ce3 81dcf45
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Thu Mar 3 14:39:30 2022 -0500
+
+    Merge branch 'master' into master
+
+[33mcommit 5c73c99d1b2914b9af76d4b5edad87603fe06089[m
+Author: Siles <sjsiless@gmail.com>
+Date:   Thu Mar 3 20:32:55 2022 +0100
+
+    test commit
+
+[33mcommit 81dcf45363711d596a6d92732615e084906681e7[m
+Author: Siles <sjsiless@gmail.com>
+Date:   Thu Mar 3 18:46:34 2022 +0100
+
+    Agregado movimiento, existencia, formularios
+
+[33mcommit 1bd8ce3d6a51ec4afa7ee88786d6e89f06131167[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Wed Mar 2 19:20:16 2022 -0500
+
+    imagen de fondo y dropdawn
+
+[33mcommit 942261689874361d794f2cab678df4918c4e6edf[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Wed Mar 2 19:01:11 2022 -0500
+
+    imagen de fondo y dropdawn
+
+[33mcommit fa81c575d6ef03fa8fdb816d9445cea31564e23a[m
+Merge: 3d1fb8f 490c83d
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Tue Mar 1 14:23:53 2022 -0500
+
+    Merge pull request #4 from lilicruz9011/master
+    
+    dropdown
+
+[33mcommit 490c83d7aa2a07e4bf336046fe5b03cc49997c43[m
+Merge: 8d3adcc 3d1fb8f
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Tue Mar 1 14:23:44 2022 -0500
+
+    Merge branch 'master' into master
+
+[33mcommit 8d3adccc7a020824220ea5e17559618c71a082f3[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Tue Mar 1 13:54:11 2022 -0500
+
+    dropdown
+
+[33mcommit 3d1fb8fbb2ef1de9b3b9e0fc56acb2b75671ff4f[m
+Author: Siles <sjsiless@gmail.com>
+Date:   Tue Mar 1 19:14:24 2022 +0100
+
+    Agregar producto
+
+[33mcommit e35ab15bbffed1973cd797c023ac02c62c2dbd61[m
+Merge: 0bd9143 ea1fa3a
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Tue Mar 1 10:41:51 2022 -0500
+
+    Merge pull request #3 from lilicruz9011/master
+    
+    arreglo archivos static
+
+[33mcommit ea1fa3a00aa3403ae36680b3cf3100fd85abeb9c[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Tue Mar 1 10:37:51 2022 -0500
+
+    arreglo archivos static
+
+[33mcommit a7198aeb268333e6abbe95357b4281c90135bdce[m
+Merge: f5010b7 e35ab15
+Author: Siles <sjsiless@gmail.com>
+Date:   Tue Mar 1 15:46:21 2022 +0100
+
+    Merge branch 'master' of https://github.com/1SJulioS1/car-inventory
+
+[33mcommit f5010b75204454733e327248fcd06481d66813be[m
+Author: Siles <sjsiless@gmail.com>
+Date:   Tue Mar 1 15:46:13 2022 +0100
+
+    temporal commit
+
+[33mcommit 0bd9143d4edcd8d3c106bf6956e09edd1429b4e6[m
+Author: Siles <sjsiless@gmail.com>
+Date:   Tue Mar 1 13:47:41 2022 +0100
+
+    updating templates
+
+[33mcommit 3b092d7a7dcc2d0565fb2e8da34dfc1b10f39c4c[m
+Author: Siles <sjsiless@gmail.com>
+Date:   Tue Mar 1 03:58:59 2022 +0100
+
+    added almacen templates
+
+[33mcommit 305083056b32d60c365b5de49183ee81c9534f2d[m
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Tue Mar 1 03:52:33 2022 +0100
+
+    add vistas
+    add urls
+    add templates
+    modifying settings
+
+[33mcommit 8a1f4c8bf01567073cb4f8d99fff867f16dba8a2[m
+Merge: 58f5fd9 a17e6d8
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Mon Feb 28 15:01:57 2022 -0500
+
+    Merge pull request #2 from lilicruz9011/master
+    
+    agregar url y vistas
+
+[33mcommit a17e6d860231bfde76abc369127ea90b5c7124c9[m
+Merge: 3ae6202 58f5fd9
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Mon Feb 28 15:01:15 2022 -0500
+
+    Merge branch 'master' into master
+
+[33mcommit 3ae620250ec0f95484dd1f12854d05e849a7feb0[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Mon Feb 28 14:38:19 2022 -0500
+
+    agregar url y vistas
+
+[33mcommit 58f5fd9cdb9e2b7c4723d6ffa32f4b78727540e2[m
+Author: s& <sjsiless@gmail.com>
+Date:   Mon Feb 28 14:24:22 2022 -0500
+
+    modelos creados
+
+[33mcommit fed47464bc67237a595a0ad8c0772a200ecda79c[m
+Author: s& <sjsiless@gmail.com>
+Date:   Mon Feb 28 13:09:04 2022 -0500
+
+    static folder added
+
+[33mcommit 61deb007c4db822cb3da174fcaa36709d326dda9[m
+Author: s& <sjsiless@gmail.com>
+Date:   Mon Feb 28 12:47:49 2022 -0500
+
+    Estructura basica
+
+[33mcommit cc8b2936ad5644649c43398ef140699e051d7894[m
+Merge: 7123066 29f6343
+Author: 1SJulioS1 <91168844+1SJulioS1@users.noreply.github.com>
+Date:   Mon Feb 28 17:14:49 2022 +0100
+
+    Merge pull request #1 from lilicruz9011/master
+    
+    plantillas
+
+[33mcommit 29f6343eb09216dad093eef27eac6caffc218f73[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Mon Feb 28 11:10:54 2022 -0500
+
+     tercer commit
+
+[33mcommit 2578b7989fac59923d12c47386b191a889f5055a[m
+Author: lilicruz9011 <lilicruz9011@gmail.com>
+Date:   Mon Feb 28 11:04:09 2022 -0500
+
+     second commit
+
+[33mcommit 71230663cc02fab27ce72e21cc7d11f6f27e736d[m
+Author: s& <sjsiless@gmail.com>
+Date:   Mon Feb 28 10:37:04 2022 -0500
+
+    First commit
