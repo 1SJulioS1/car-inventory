@@ -1,8 +1,6 @@
 import datetime
 import os
-from pathlib import Path
-import inventory
-from shutil import copytree, copy, copy2, rmtree
+from django.utils.datastructures import MultiValueDictKeyError
 from pathlib import Path
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
@@ -11,6 +9,7 @@ from .forms import *
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 import json
+from django.contrib import messages
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -24,8 +23,6 @@ def product(request):
     producto = ProductoForm()
     context = {
         'form': producto,
-        'msg': '',
-        'texto': ''
     }
     if request.method == 'POST':
         producto_form = ProductoForm(request.POST)
@@ -35,7 +32,7 @@ def product(request):
             fecha_entrada = producto_form.cleaned_data['fecha_entrada'].split("-")
             precio_costo = producto_form.cleaned_data['precio_costo']
             precio_venta = producto_form.cleaned_data['precio_venta']
-            es_central = producto_form.cleaned_data['almacen_central']
+            almacen = producto_form.cleaned_data['almacen']
             anho = int(fecha_entrada[0])
             mes = int(fecha_entrada[1])
             dia = int(fecha_entrada[2])
@@ -48,22 +45,33 @@ def product(request):
             try:
                 producto.save()
                 if Existencia.objects.all().filter(producto=producto.id,
-                                                   almacen=Almacen.objects.get(nombre=es_central).id).count() == 0:
-                    e = Existencia(almacen=Almacen.objects.get(nombre=es_central), producto=producto,
+                                                   almacen=Almacen.objects.get(nombre=almacen).id).count() == 0:
+                    e = Existencia(almacen=Almacen.objects.get(nombre=almacen), producto=producto,
                                    cantidad=cantidad)
+                    # print("No existe el producto en el almacen")
                     try:
                         e.save()
                     except:
+                        # print("Error al guardar existencia")
                         pass
+                else:
+                    # print("Existe el producto en el almacen")
+                    messages.error(request, "Producto ya existente en el almacén " + almacen.nombre)
+                    return render(request, 'inventory/producto/create_product.html')
             except:
+                # print("Error  guardando producto")
                 return render(request, 'inventory/producto/create_product.html', context)
             else:
+                # print("Agregado correctmamente")
                 return HttpResponseRedirect(reverse('inv:list_product'))
         else:
-            context['msg'] = 'true'
-            context['texto'] = 'almacen_error'
-            return render(request, 'inventory/producto/create_product.html', context)
+            if Existencia.objects.all().filter(producto=Producto.objects.get(nombre=producto_form['nombre'].value()).id,
+                                               almacen=producto_form['almacen'].value()).count() > 0:
+                messages.error(request, "Producto ya existente en el almacén " + Almacen.objects.get(
+                    id=producto_form['almacen'].value()).nombre)
+                return render(request, 'inventory/producto/create_product.html', context)
     else:
+        # print("Es un GET")
         return render(request, 'inventory/producto/create_product.html', context)
 
 
@@ -80,14 +88,50 @@ class ProductoListView(ListView):
     template_name = 'inventory/producto/list_product.html'
 
 
-def update_producto(request, pk):
-    object = Producto.objects.get(id=int(pk))
-    form = ProductoForm(instance=object)
-    context = {
-        'form': form,
-        'msg': 'update'
-    }
-    return render(request, 'inventory/producto/create_product.html', context)
+# def update_producto(request, pk):
+#     if request.method == 'GET':
+#         object = Producto.objects.get(id=int(pk))
+#         form = ProductoForm(instance=object)
+#         context = {
+#             'form': form,
+#             'msg': 'update'
+#         }
+#         return render(request, 'inventory/producto/create_product.html', context)
+#     if request.method == 'POST':
+#         producto_form = ProductoForm()
+#         context = {
+#             'form': producto_form,
+#         }
+#         producto_form = ProductoForm(request.POST)
+#         if producto_form.is_valid():
+#             pass
+#             nombre = producto_form.cleaned_data['nombre']
+#             cantidad = producto_form.cleaned_data['cantidad']
+#             fecha_entrada = producto_form.cleaned_data['fecha_entrada'].split("-")
+#             precio_costo = producto_form.cleaned_data['precio_costo']
+#             precio_venta = producto_form.cleaned_data['precio_venta']
+#             almacen = producto_form.cleaned_data['almacen']
+#             anho = int(fecha_entrada[0])
+#             mes = int(fecha_entrada[1])
+#             dia = int(fecha_entrada[2])
+#             producto = Producto(nombre=nombre,
+#                                 cantidad=cantidad,
+#                                 fecha_entrada=datetime.datetime(anho, mes, dia),
+#                                 precio_costo=precio_costo,
+#                                 precio_venta=precio_venta
+#                                 )
+#
+#             try:
+#                 producto.save()
+#             except:
+#                 # print("Error  guardando producto")
+#                 return render(request, 'inventory/producto/create_product.html', context)
+#         else:
+#             if Existencia.objects.all().filter(producto=Producto.objects.get(nombre=producto_form['nombre'].value()).id,
+#                                                almacen=producto_form['almacen'].value()).count() > 0:
+#                 messages.error(request, "Producto ya existente en el almacén " + Almacen.objects.get(
+#                     id=producto_form['almacen'].value()).nombre)
+#                 return render(request, 'inventory/producto/create_product.html', context)
 
 
 def create_almacen(request):
@@ -190,37 +234,40 @@ def movimiento(request):
 def import_venta(request):
     if request.method == 'GET':
         return render(request, 'inventory/ventas/ventas.html')
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
-        files = os.listdir(MEDIA_ROOT)
-        if myfile.name not in files:
-            fs = FileSystemStorage()
-            filename = fs.save(myfile.name, myfile)
-            f = open(os.path.join(MEDIA_ROOT, myfile.name))
-            data = json.load(f)
-            print(type(data))
-            fecha_no_f = myfile.name.split('#')[0].split("-")
-            anho = int(fecha_no_f[0])
-            mes = int(fecha_no_f[1])
-            dia = int(fecha_no_f[2])
-            fecha = datetime.datetime(anho, mes, dia),
+    if request.method == 'POST':
+        try:
+            myfile = request.FILES['myfile']
+            files = os.listdir(MEDIA_ROOT)
+            if myfile.name not in files:
+                fs = FileSystemStorage()
+                filename = fs.save(myfile.name, myfile)
+                f = open(os.path.join(MEDIA_ROOT, myfile.name))
+                data = json.load(f)
+                print(type(data))
+                fecha_no_f = myfile.name.split('#')[0].split("-")
+                anho = int(fecha_no_f[0])
+                mes = int(fecha_no_f[1])
+                dia = int(fecha_no_f[2])
+                fecha = datetime.datetime(anho, mes, dia),
 
-            almacen = f.name.split('#')[1].split(".")[0]
+                almacen = f.name.split('#')[1].split(".")[0]
 
-            for key, value in data.items():
-                almacen = Almacen.objects.get(nombre=almacen)
-                producto = Producto.objects.get(nombre=key)
-                producto.cantidad -= int(value)
-                producto.save()
-                e = Existencia.objects.get(almacen=almacen.id, producto=producto.id)
-                e.cantidad -= int(value)
-                e.save()
-                v = Ventas(existencia=e, fecha=datetime.date(anho, mes, dia), cantidad=int(value))
-                try:
-                    v.save()
-                    return render(request, 'inventory/ventas/ventas.html', {'msg': 'good'})
-                except:
-                    pass
+                for key, value in data.items():
+                    almacen = Almacen.objects.get(nombre=almacen)
+                    producto = Producto.objects.get(nombre=key)
+                    producto.cantidad -= int(value)
+                    producto.save()
+                    e = Existencia.objects.get(almacen=almacen.id, producto=producto.id)
+                    e.cantidad -= int(value)
+                    e.save()
+                    v = Ventas(existencia=e, fecha=datetime.date(anho, mes, dia), cantidad=int(value))
+                    try:
+                        v.save()
+                        return render(request, 'inventory/ventas/ventas.html', {'msg': 'good'})
+                    except:
+                        pass
+        except MultiValueDictKeyError:
+            return render(request, 'inventory/ventas/ventas.html', {'msg': 'empty_upload'})
     else:
         print("Venta existente")
         return render(request, 'inventory/ventas/ventas.html', {'msg': 'error'})
@@ -250,3 +297,14 @@ def ventas_periodo(request):
     else:
         context['msg'] = 'form_request'
         return render(request, 'inventory/ventas/reporte_ventas.html', context)
+
+
+def stored_products(request):
+    if request.method == 'GET':
+        p = []
+        existencia = Existencia.objects.all()
+        for e in existencia:
+            if e.almacen.es_central == 'Almacén central':
+                p.append(e.producto)
+        print("Productos sin exhibir :" + str(p))
+        return render(request, 'inventory/productos_sin_exhibir.html', {'productos': p})

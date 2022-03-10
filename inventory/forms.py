@@ -51,8 +51,8 @@ class ProductoForm(forms.ModelForm):
             }
         )
     )
-    almacen_central = forms.ModelChoiceField(
-        queryset=Almacen.objects.all().filter(es_central='Almacén central'),
+    almacen = forms.ModelChoiceField(
+        queryset=Almacen.objects.all(),
         widget=forms.Select(attrs={
             'class': 'form-control'
         })
@@ -109,8 +109,8 @@ class MovimientoForm(forms.ModelForm):
         model = Movimiento
         fields = '__all__'
 
-class FileUploadForm(forms.Form):
 
+class FileUploadForm(forms.Form):
     file = forms.FileField()
 
     def clean_file(self):
@@ -132,6 +132,7 @@ class FileUploadForm(forms.Form):
         if instance:
             instance.save()
         return instance
+
 
 class VentasPeriodoForm(forms.Form):
     fecha_inicio = forms.CharField(

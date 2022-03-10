@@ -9,7 +9,7 @@ producto = [
     path('modificar-producto/<pk>/', views.update_producto, name="update_product"),
     path('eliminar-producto/<pk>/', views.ProductoDeleteView.as_view(), name="delete_product"),
     path('listar-producto/', views.ProductoListView.as_view(), name="list_product"),
-
+    path('productos-sin-exhibir/',views.stored_products,name="stored_products")
 ]
 
 almacen = [

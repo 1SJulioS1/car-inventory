@@ -4,7 +4,7 @@ from django.db import models
 
 class Producto(models.Model):
     nombre = models.CharField(max_length=20, unique=True)
-    cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    cantidad = models.IntegerField(default=0,validators=[MinValueValidator(0)])
     fecha_entrada = models.DateField()
     precio_costo = models.DecimalField(decimal_places=2, max_digits=10, default=0, validators=[MinValueValidator(0)])
     precio_venta = models.DecimalField(decimal_places=2, max_digits=10, default=0, validators=[MinValueValidator(0)])

@@ -18,6 +18,8 @@
                 {% endif %}
                 {% if msg == 'error' %}
                     <p>Ha seleccionado una venta ya agregada<br>Seleccione una no existente</p>
+                {% elif msg == 'empty_upload'%}
+                    <p>Presione Browse para seleccionar un archivo</p>
                 {% endif %}
             </div>
             <div class="d-flex align-items-center justify-content-center">
