@@ -29,6 +29,7 @@
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
+<<<<<<< HEAD
                 </button>
                 <div class="btn-group" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
@@ -42,6 +43,17 @@
                                 <li class="dropdown dropright">
                                     <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown"
                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
+=======
+                    </button>
+                    <div class="btn-group collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="{% url 'inv:Home' %}">Inicio</a></li>
+                            <li class="nav-item dropdown px-lg-4">
+                                <a class="nav-link text-uppercase text-expanded dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Inventario</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li class="dropdown-submenu"> 
+                                    <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
+>>>>>>> 81d546429970a479124f1e15279a62485ac28733
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <li><a class="nav-link dropdown-item text-uppercase text-expanded"
                                                href="{% url 'inv:create_product' %}">Crear productos</a></li>
@@ -49,6 +61,7 @@
                                                href="{% url 'inv:list_product' %}">Listar productos</a></li>
                                     </ul>
                                 </li>
+<<<<<<< HEAD
                                 <li class="dropdown dropright">
                                     <a class="nav-link dropdown-toggle  text-uppercase" href="#"
                                        id="navbarDropdown"
@@ -58,6 +71,13 @@
                                                href="{% url 'inv:create_almacen' %}">Crear almacen</a></li>
                                         <li><a class="nav-link dropdown-item text-uppercase text-expanded"
                                                href="{% url 'inv:list_almacen' %}">Listar almacen</a></li>
+=======
+                                <li class="dropdown-submenu">
+                                    <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Almacén</a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="nav-link dropdown-item text-uppercase text-expanded" href="{% url 'inv:create_almacen' %}">Crear almacén</a></li>
+                                    <li><a class="nav-link dropdown-item text-uppercase text-expanded" href="{% url 'inv:list_almacen' %}">Listar almacén</a></li>
+>>>>>>> 81d546429970a479124f1e15279a62485ac28733
                                     </ul>
                                 </li>
                             </ul>
@@ -83,12 +103,18 @@
                                aria-expanded="false">Informes</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li class="dropdown">
+<<<<<<< HEAD
                                 <li><a class="nav-link text-uppercase"
                                        href="{% url 'inv:selling_period_form' %}">Ventas por periodo</a></li>
                                 <li><a class="nav-link text-uppercase" href="{% url 'inv:list_product' %}">Lista de
                                     productos</a></li>
                                 <li><a class="nav-link text-uppercase"
                                        href="{% url 'inv:Movimiento' %}">Transferencia</a></li>
+=======
+                                    <li><a class="nav-link text-uppercase"
+                                        href="{% url 'inv:selling_period_form' %}">Ventas por período</a></li>
+                                    <li><a class="nav-link text-uppercase" href="{% url 'inv:list_product' %}">Lista de productos</a></li>
+>>>>>>> 81d546429970a479124f1e15279a62485ac28733
                                 </li>
                             </ul>
                         </li>

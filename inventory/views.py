@@ -48,23 +48,28 @@ def product(request):
                                                    almacen=Almacen.objects.get(nombre=almacen).id).count() == 0:
                     e = Existencia(almacen=Almacen.objects.get(nombre=almacen), producto=producto,
                                    cantidad=cantidad)
-                    # print("No existe el producto en el almacen")
+                    return HttpResponseRedirect(reverse('inv:list_product'))
+
+                    print("No existe el producto en el almacen")
                     try:
                         e.save()
                     except:
+                        print("No existe el producto en el almacen")
                         # print("Error al guardar existencia")
                         pass
                 else:
-                    # print("Existe el producto en el almacen")
+                    print("Existe el producto en el almacen")
                     messages.error(request, "Producto ya existente en el almacén " + almacen.nombre)
                     return render(request, 'inventory/producto/create_product.html')
             except:
-                # print("Error  guardando producto")
+                print("Error  guardando producto")
                 return render(request, 'inventory/producto/create_product.html', context)
             else:
-                # print("Agregado correctmamente")
+                print("Agregado correctmamente")
                 return HttpResponseRedirect(reverse('inv:list_product'))
         else:
+            # Producto ya existente en el sistema
+            print("Error  guardando producto")
             if Existencia.objects.all().filter(producto=Producto.objects.get(nombre=producto_form['nombre'].value()).id,
                                                almacen=producto_form['almacen'].value()).count() > 0:
                 messages.error(request, "Producto ya existente en el almacén " + Almacen.objects.get(
@@ -165,14 +170,20 @@ def movimiento(request):
                     e = Existencia.objects.get(almacen=origen.id, producto=producto.id)
                     e.cantidad -= int(cantidad)
                     e.save()
+                    return HttpResponseRedirect(reverse('inv:list_almacen'))
+
                     if Existencia.objects.filter(almacen=destino.id, producto=producto.id).count() == 0:
                         print("No existe producto en el almacen")
                         e = Existencia(almacen=destino, producto=producto, cantidad=cantidad)
                         e.save()
+                        return HttpResponseRedirect(reverse('inv:list_almacen'))
+
                     else:
                         e = Existencia.objects.get(almacen=destino.id, producto=producto.id).cantidad
                         e.cantidad += int(cantidad)
                         e.save()
+                        return HttpResponseRedirect(reverse('inv:list_almacen'))
+
                     try:
                         mov_instance.save()
                         return HttpResponseRedirect(reverse('inv:list_almacen'))
@@ -230,6 +241,8 @@ def import_venta(request):
                     except:
                         pass
         except MultiValueDictKeyError:
+            #Agregar control de excepcion 
+            # 1- Cuando ya existe una venta en ese dia(ValueError)           
             return render(request, 'inventory/ventas/ventas.html', {'msg': 'empty_upload'})
     else:
         print("Venta existente")
