@@ -88,50 +88,12 @@ class ProductoListView(ListView):
     template_name = 'inventory/producto/list_product.html'
 
 
-# def update_producto(request, pk):
-#     if request.method == 'GET':
-#         object = Producto.objects.get(id=int(pk))
-#         form = ProductoForm(instance=object)
-#         context = {
-#             'form': form,
-#             'msg': 'update'
-#         }
-#         return render(request, 'inventory/producto/create_product.html', context)
-#     if request.method == 'POST':
-#         producto_form = ProductoForm()
-#         context = {
-#             'form': producto_form,
-#         }
-#         producto_form = ProductoForm(request.POST)
-#         if producto_form.is_valid():
-#             pass
-#             nombre = producto_form.cleaned_data['nombre']
-#             cantidad = producto_form.cleaned_data['cantidad']
-#             fecha_entrada = producto_form.cleaned_data['fecha_entrada'].split("-")
-#             precio_costo = producto_form.cleaned_data['precio_costo']
-#             precio_venta = producto_form.cleaned_data['precio_venta']
-#             almacen = producto_form.cleaned_data['almacen']
-#             anho = int(fecha_entrada[0])
-#             mes = int(fecha_entrada[1])
-#             dia = int(fecha_entrada[2])
-#             producto = Producto(nombre=nombre,
-#                                 cantidad=cantidad,
-#                                 fecha_entrada=datetime.datetime(anho, mes, dia),
-#                                 precio_costo=precio_costo,
-#                                 precio_venta=precio_venta
-#                                 )
 #
-#             try:
-#                 producto.save()
-#             except:
-#                 # print("Error  guardando producto")
-#                 return render(request, 'inventory/producto/create_product.html', context)
-#         else:
-#             if Existencia.objects.all().filter(producto=Producto.objects.get(nombre=producto_form['nombre'].value()).id,
-#                                                almacen=producto_form['almacen'].value()).count() > 0:
-#                 messages.error(request, "Producto ya existente en el almacén " + Almacen.objects.get(
-#                     id=producto_form['almacen'].value()).nombre)
-#                 return render(request, 'inventory/producto/create_product.html', context)
+# class ProductoUpdateView(UpdateView):
+#     model = Producto
+#     form_class = ProductoUpdateForm
+#     template_name = 'inventory/producto/update_product.html'
+#     success_url = reverse_lazy('inv:list_product')
 
 
 def create_almacen(request):
@@ -151,6 +113,7 @@ def create_almacen(request):
             except:
                 return render(request, 'inventory/almacen/create_almacen.html', context)
         else:
+            messages.error(request, "Almacén ya existente, introduzca otro nombre")
             return render(request, 'inventory/almacen/create_almacen.html', context)
     else:
         return render(request, 'inventory/almacen/create_almacen.html', context)
@@ -308,3 +271,27 @@ def stored_products(request):
                 p.append(e.producto)
         print("Productos sin exhibir :" + str(p))
         return render(request, 'inventory/productos_sin_exhibir.html', {'productos': p})
+
+# def extract_product(request):
+#     js = serializers.get_serializer('json')()
+#     producto = js.serialize(Producto.objects.all(), ensure_ascii=False)
+#     almacen = js.serialize(Almacen.objects.all(), ensure_ascii=False)
+#     existencia = js.serialize(Existencia.objects.all(), ensure_ascii=False)
+#     if request.method == 'GET':
+#         render(request, 'inventory/producto/extract_product.html',
+#                {'producto': producto, 'almacen': almacen, 'existencia': existencia})
+#     else:
+#         prod = request.POST['producto']
+#         alm = request.POST['almacen']
+#         cant = request.POST['cantidad-new']
+#         p = Producto.objects.get(nombre=prod)
+#         a_id = Almacen.objects.get(nombre=alm).id
+#         e = Existencia.objects.get(producto=p.id, almacen=a_id)
+#         e.cantidad = e.cantidad-cant
+#         p.cantidad = p.cantidad-cant
+#         try:
+#             e.save()
+#             p.save()
+#             return render(request, 'inventory/producto/list_product.html')
+#         except:
+#             pass

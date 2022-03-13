@@ -8,6 +8,7 @@ producto = [
     path('crear-producto/', views.product, name="create_product"),
     path('eliminar-producto/<pk>/', views.ProductoDeleteView.as_view(), name="delete_product"),
     path('listar-producto/', views.ProductoListView.as_view(), name="list_product"),
+    # path('actualizar-producto/<pk>/', views.ProductoUpdateView.as_view(), name="update_product"),
     path('productos-sin-exhibir/',views.stored_products,name="stored_products")
 ]
 
