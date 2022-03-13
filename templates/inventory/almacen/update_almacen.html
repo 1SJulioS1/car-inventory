@@ -1,0 +1,56 @@
+{% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Actualizar almacén
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-5 d-flex align-items-center justify-content-center">
+            <div class="row">
+                <div class="col-5">
+                    <h1>Actualizar Almacén</h1>
+                </div>
+            </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="row cd-flex align-items-center justify-content-center">
+                        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="True">&times</span>
+                            </button>
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="col-3 d-flex align-items-center justify-content-center">
+            <div class="container f_back">
+                <form id="form-default" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="form-group col-10">
+                            <label for="fecha">Nombre</label>
+                            {{ form.nombre }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-10">
+                            <label for="precio-costo">Tipo de almacén</label>
+                            {{ form.es_central }}
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="form-actions right">
+                            <button class="btn" form="form-default" type="submit">Agregar</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

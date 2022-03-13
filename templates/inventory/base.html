@@ -29,55 +29,38 @@
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-<<<<<<< HEAD
                 </button>
-                <div class="btn-group" id="navbarSupportedContent">
+                <div class="btn-group collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="{% url 'inv:Home' %}">Inicio</a>
                         </li>
-                        <li class="nav-item dropdown  px-lg-4">
+                        <li class="nav-item dropdown px-lg-4">
                             <a class="nav-link text-uppercase text-expanded dropdown-toggle" href="#"
                                id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">Inventario</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li class="dropdown dropright">
+                                <li class="dropdown-submenu">
                                     <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown"
                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
-=======
-                    </button>
-                    <div class="btn-group collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="{% url 'inv:Home' %}">Inicio</a></li>
-                            <li class="nav-item dropdown px-lg-4">
-                                <a class="nav-link text-uppercase text-expanded dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Inventario</a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li class="dropdown-submenu"> 
-                                    <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
->>>>>>> 81d546429970a479124f1e15279a62485ac28733
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <li><a class="nav-link dropdown-item text-uppercase text-expanded"
                                                href="{% url 'inv:create_product' %}">Crear productos</a></li>
                                         <li><a class="nav-link dropdown-item text-uppercase text-expanded"
                                                href="{% url 'inv:list_product' %}">Listar productos</a></li>
+                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
+                                               href="{% url 'inv:update_product_cant' %}">Actualizar cantidad</a></li>
                                     </ul>
                                 </li>
-<<<<<<< HEAD
-                                <li class="dropdown dropright">
-                                    <a class="nav-link dropdown-toggle  text-uppercase" href="#"
-                                       id="navbarDropdown"
-                                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Almacen</a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
-                                               href="{% url 'inv:create_almacen' %}">Crear almacen</a></li>
-                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
-                                               href="{% url 'inv:list_almacen' %}">Listar almacen</a></li>
-=======
                                 <li class="dropdown-submenu">
-                                    <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Almacén</a>
+                                    <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown"
+                                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Almacén</a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="nav-link dropdown-item text-uppercase text-expanded" href="{% url 'inv:create_almacen' %}">Crear almacén</a></li>
-                                    <li><a class="nav-link dropdown-item text-uppercase text-expanded" href="{% url 'inv:list_almacen' %}">Listar almacén</a></li>
->>>>>>> 81d546429970a479124f1e15279a62485ac28733
+                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
+                                               href="{% url 'inv:create_almacen' %}">Crear almacén</a></li>
+                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
+                                               href="{% url 'inv:update_almacen_list' %}">Actualizar almacén</a></li>
+                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
+                                               href="{% url 'inv:list_almacen' %}">Listar almacén</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -92,7 +75,7 @@
                                        href="{% url 'inv:import_selling' %}">Recepción</a></li>
                                 <li><a class="nav-link text-uppercase">Venta</a></li>
                                 <li><a class="nav-link text-uppercase"
-                                       href="{% url 'inv:Movimiento' %}">Transferencia</a></li>
+                                       href="{% url 'inv:Movimiento' %}">Transferencia</a>
                                 </li>
                             </ul>
                         </li>
@@ -103,19 +86,16 @@
                                aria-expanded="false">Informes</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li class="dropdown">
-<<<<<<< HEAD
                                 <li><a class="nav-link text-uppercase"
-                                       href="{% url 'inv:selling_period_form' %}">Ventas por periodo</a></li>
+                                       href="{% url 'inv:selling_period_form' %}">Ventas por período</a></li>
                                 <li><a class="nav-link text-uppercase" href="{% url 'inv:list_product' %}">Lista de
-                                    productos</a></li>
-                                <li><a class="nav-link text-uppercase"
-                                       href="{% url 'inv:Movimiento' %}">Transferencia</a></li>
-=======
-                                    <li><a class="nav-link text-uppercase"
-                                        href="{% url 'inv:selling_period_form' %}">Ventas por período</a></li>
-                                    <li><a class="nav-link text-uppercase" href="{% url 'inv:list_product' %}">Lista de productos</a></li>
->>>>>>> 81d546429970a479124f1e15279a62485ac28733
+                                    productos</a>
                                 </li>
+                                <li><a class="nav-link text-uppercase" href="{% url 'inv:stored_products' %}">Productos
+                                    sin
+                                    exhibir</a>
+                                </li>
+
                             </ul>
                         </li>
                     </ul>
@@ -129,13 +109,13 @@
 
 {% endblock %}
 
-<!--{#<footer class="footer text-faded text-center py-5">#}
-{#    <div class="container">#}
-{#        <p class="m-0 mbt1">&copy; Gestión de Inventario <span id="year"></span></p>#}
-{#        {% now "Y" %}#}
-{#    </div>#}
-{##}
-</footer>-->
+<footer class="footer text-faded text-center py-5">
+    <div class="container">
+        <p class="m-0 mbt1">&copy; Gestión de Inventario <span id="year"></span></p>
+        {% now "Y" %}
+    </div>
+
+</footer>
 <script src="{% static 'inventory/vendor/js/jquery-3.5.1.js ' %}"></script>
 <script src="{% static 'inventory/vendor/js/jquery.dataTables.min.js ' %}"></script>
 <script src="{% static 'inventory/vendor/js/dataTables.bootstrap4.min.js ' %}"></script>

@@ -1,12 +1,14 @@
 import datetime
 import os
+
+from django.core import serializers
 from django.utils.datastructures import MultiValueDictKeyError
 from pathlib import Path
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import *
 from .forms import *
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.files.storage import FileSystemStorage
 import json
 from django.contrib import messages
@@ -48,9 +50,6 @@ def product(request):
                                                    almacen=Almacen.objects.get(nombre=almacen).id).count() == 0:
                     e = Existencia(almacen=Almacen.objects.get(nombre=almacen), producto=producto,
                                    cantidad=cantidad)
-                    return HttpResponseRedirect(reverse('inv:list_product'))
-
-                    print("No existe el producto en el almacen")
                     try:
                         e.save()
                     except:
@@ -80,10 +79,10 @@ def product(request):
         return render(request, 'inventory/producto/create_product.html', context)
 
 
-class ProductoDeleteView(DeleteView):
-    model = Producto
-    template_name = 'inventory/producto/delete_product.html'
-    success_url = 'inv:list_product'
+# class ProductoDeleteView(DeleteView):
+#     model = Producto
+#     template_name = 'inventory/producto/delete_product.html'
+#     success_url = 'inv:list_product'
 
 
 class ProductoListView(ListView):
@@ -101,33 +100,15 @@ class ProductoListView(ListView):
 #     success_url = reverse_lazy('inv:list_product')
 
 
-def create_almacen(request):
-    almacen = AlmacenForm()
-    context = {
-        'form': almacen,
-    }
-    if request.method == "POST":
-        almacen_form = AlmacenForm(request.POST)
-        if almacen_form.is_valid():
-            nombre = almacen_form.cleaned_data['nombre']
-            es_central = almacen_form.cleaned_data['es_central']
-            almacen = Almacen(nombre=nombre, es_central=es_central)
-            try:
-                almacen.save()
-                return HttpResponseRedirect(reverse('inv:list_almacen'))
-            except:
-                return render(request, 'inventory/almacen/create_almacen.html', context)
-        else:
-            messages.error(request, "Almacén ya existente, introduzca otro nombre")
-            return render(request, 'inventory/almacen/create_almacen.html', context)
-    else:
-        return render(request, 'inventory/almacen/create_almacen.html', context)
-
-
-class AlmacenDeleteView(DeleteView):
+class AlmacenCreateView(CreateView):
     model = Almacen
-    template_name = 'inventory/almacen/delete_almacen.html'
+    form_class = AlmacenForm
     success_url = reverse_lazy('inv:list_almacen')
+    template_name = 'inventory/almacen/create_almacen.html'
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Almacén ya existente, introduzca otro nombre")
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class AlmacenListView(ListView):
@@ -135,6 +116,26 @@ class AlmacenListView(ListView):
     context_object_name = 'object'
     ordering = ['nombre']
     template_name = 'inventory/almacen/list_almacen.html'
+    success_url = reverse_lazy('metr:update_almacen_list')
+
+
+class AlmacenListUpdate(ListView):
+    model = Almacen
+    context_object_name = 'object'
+    ordering = ['nombre']
+    template_name = 'inventory/almacen/list_almacen_upd.html'
+
+
+class AlmacenUpdateView(UpdateView):
+    model = Almacen
+    form_class = AlmacenForm
+    success_url = reverse_lazy('inv:update_almacen_list')
+    pk_url_kwarg = 'pk'
+    template_name = 'inventory/almacen/update_almacen.html'
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Almacén ya existente, introduzca otro nombre")
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 def productos_almacen(request, pk):
@@ -170,20 +171,15 @@ def movimiento(request):
                     e = Existencia.objects.get(almacen=origen.id, producto=producto.id)
                     e.cantidad -= int(cantidad)
                     e.save()
-                    return HttpResponseRedirect(reverse('inv:list_almacen'))
-
                     if Existencia.objects.filter(almacen=destino.id, producto=producto.id).count() == 0:
                         print("No existe producto en el almacen")
                         e = Existencia(almacen=destino, producto=producto, cantidad=cantidad)
                         e.save()
                         return HttpResponseRedirect(reverse('inv:list_almacen'))
-
                     else:
                         e = Existencia.objects.get(almacen=destino.id, producto=producto.id).cantidad
                         e.cantidad += int(cantidad)
                         e.save()
-                        return HttpResponseRedirect(reverse('inv:list_almacen'))
-
                     try:
                         mov_instance.save()
                         return HttpResponseRedirect(reverse('inv:list_almacen'))
@@ -241,7 +237,7 @@ def import_venta(request):
                     except:
                         pass
         except MultiValueDictKeyError:
-            #Agregar control de excepcion 
+            # Agregar control de excepcion
             # 1- Cuando ya existe una venta en ese dia(ValueError)           
             return render(request, 'inventory/ventas/ventas.html', {'msg': 'empty_upload'})
     else:
@@ -285,26 +281,25 @@ def stored_products(request):
         print("Productos sin exhibir :" + str(p))
         return render(request, 'inventory/productos_sin_exhibir.html', {'productos': p})
 
-# def extract_product(request):
-#     js = serializers.get_serializer('json')()
-#     producto = js.serialize(Producto.objects.all(), ensure_ascii=False)
-#     almacen = js.serialize(Almacen.objects.all(), ensure_ascii=False)
-#     existencia = js.serialize(Existencia.objects.all(), ensure_ascii=False)
-#     if request.method == 'GET':
-#         render(request, 'inventory/producto/extract_product.html',
-#                {'producto': producto, 'almacen': almacen, 'existencia': existencia})
-#     else:
-#         prod = request.POST['producto']
-#         alm = request.POST['almacen']
-#         cant = request.POST['cantidad-new']
-#         p = Producto.objects.get(nombre=prod)
-#         a_id = Almacen.objects.get(nombre=alm).id
-#         e = Existencia.objects.get(producto=p.id, almacen=a_id)
-#         e.cantidad = e.cantidad-cant
-#         p.cantidad = p.cantidad-cant
-#         try:
-#             e.save()
-#             p.save()
-#             return render(request, 'inventory/producto/list_product.html')
-#         except:
-#             pass
+
+def extract_product(request):
+    js = serializers.get_serializer('json')()
+    producto = js.serialize(Producto.objects.all(), ensure_ascii=False)
+    almacen = js.serialize(Almacen.objects.all(), ensure_ascii=False)
+    existencia = js.serialize(Existencia.objects.all(), ensure_ascii=False)
+    if request.method == 'GET':
+        print('get')
+        return render(request, 'inventory/producto/extract_product.html',
+                      {'producto': producto, 'almacen': almacen, 'existencia': existencia})
+    else:
+        prod = request.POST['producto']
+        alm = request.POST['almacen']
+        cant = int(request.POST['cantidad-new'])
+        p = Producto.objects.get(nombre=prod)
+        a_id = Almacen.objects.get(nombre=alm).id
+        e = Existencia.objects.get(producto=p.id, almacen=a_id)
+        e.cantidad = e.cantidad - cant
+        p.cantidad = p.cantidad - cant
+        e.save()
+        p.save()
+        return HttpResponseRedirect(reverse('inv:list_product'))

@@ -15,14 +15,13 @@
             {% if messages %}
                 {% for message in messages %}
                     <div class="row cd-flex align-items-center justify-content-center">
-                        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                        <div class="alert {{ message.tags }}{{ message. }} alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="True">&times;</span>
+                                <span aria-hidden="True">&times</span>
                             </button>
                             {{ message }}
                         </div>
                     </div>
-<<<<<<< HEAD
                 {% endfor %}
 
             {% endif %}
@@ -36,13 +35,8 @@
                             <label for="fecha">Nombre</label>
                             {{ form.nombre }}
                         </div>
-=======
-                </div>
-                <div class="d-flex align-items-center justify-content-center">
-                    <div class="form-actions right">
-                        <button class="btn" form="form-default" type="submit">Agregar</button>
->>>>>>> 81d546429970a479124f1e15279a62485ac28733
                     </div>
+
                     <div class="row">
                         <div class="form-group col-10">
                             <label for="precio-costo">Tipo de almacén</label>
@@ -51,9 +45,8 @@
                     </div>
                     <div class="d-flex align-items-center justify-content-center">
                         <div class="form-actions right">
-                            <button class="btn btn-success" form="form-default" type="submit">Agregar</button>
+                            <button class="btn" form="form-default" type="submit">Agregar</button>
                         </div>
-                    </div>
                 </form>
             </div>
         </div>

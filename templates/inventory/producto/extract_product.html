@@ -1,57 +1,162 @@
 {% extends 'inventory/base.html' %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 {% block title %}
-    Crear almacén
+    Actualizar producto
+
 {% endblock %}
 
 {% block content %}
     <div class="row">
-        <div class="col-5 d-flex align-items-center justify-content-center">
-            <div class="row">
-                <div class="col-5">
-                    <h1>Extraer Producto</h1>
-                </div>
-            </div>
-<!--            {% if messages %}
-                {% for message in messages %}
-                    <div class="row cd-flex align-items-center justify-content-center">
-                        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="True">&times;</span>
-                            </button>
-                            {{ message }}
-                        </div>
-                    </div>
-                {% endfor %}
 
-            {% endif %}-->>
+        <div class="col-5 d-flex align-items-center justify-content-center">
+            <div class="col-5">
+                <h1>
+                    Actualizar producto
+                </h1>
+            </div>
         </div>
-        <div class="col-3 d-flex align-items-center justify-content-center">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="row cd-flex align-items-center justify-content-center">
+                    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="True">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+
+        {% endif %}
+
+        <div class="col-5 d-flex align-items-center justify-content-center">
             <div class="container f_back">
                 <form id="form-default" method="post">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="form-group col-10">
-                            <label for="fecha">Nombre</label>
-                            {{ form.nombre }}
+                        <div class="form-group col-5">
+                            <label for="select-product">Producto</label>
+                            <select name="producto" id="select-product" class="form-control"></select>
+                        </div>
+                        <div class="form-group col-5">
+                            <label for="select-almacen">Almacén</label>
+                            <select name="almacen" id="select-almacen" class="form-control"></select>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-10">
-                            <label for="precio-costo">Tipo de almacén</label>
-                            {{ form.es_central }}
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-5">
+                            <label for="cantidad-product-old">Cantidad anterior</label>
+                            <input type="text" name="cantidad-old" id="cantidad-product-old" class="form-control">
+                        </div>
+                        <div class="form-group col-5">
+                            <label for="cantidad-product-new">Cantidad a restar</label>
+                            <input type="text" name="cantidad-new" id="cantidad-product-new" class="form-control">
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-center">
                         <div class="form-actions right">
-                            <button class="btn btn-success" form="form-default" type="submit">Agregar</button>
+                            <button type="reset" class="btn btn-default">Cancelar</button>
+                            <button id="confirmar" type="submit" class="btn green">Agregar</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        (function () {
+            let obj_prod = text2json('{{ producto|escapejs }}');
+            let obj_exis = text2json('{{ existencia|escapejs }}');
+            let obj_alm = text2json('{{ almacen|escapejs }}');
+            let sel_p = document.getElementById('select-product');
+            let sel_alm = document.getElementById('select-almacen');
 
+            function text2json(lista) {
+                var text = '';
+                for (let i = 0; i < lista.length; i++) {
+                    text += lista[i];
+                }
+                return JSON.parse(text)
+            }
 
+            let prod = '';
+            for (let i = 0; i < obj_prod.length; i++) {
+                if (i == 0) {
+                    prod = obj_prod[i].fields.nombre + '';
+                }
+                let opt = document.createElement('option');
+                let text = document.createTextNode(obj_prod[i].fields.nombre + '');
+                opt.appendChild(text);
+                sel_p.appendChild(opt);
+            }
+
+            function rellenar_almacen() {
+                let p = document.getElementById('select-product').value;
+                while (sel_alm.lastElementChild != null) {
+                    sel_alm.removeChild(sel_alm.lastElementChild);
+                }
+                count = 0;
+                for (let i = 0; i < obj_prod.length; i++) {
+                    if (obj_prod[i].fields.nombre == p) {
+                        for (let y = 0; y < obj_exis.length; y++) {
+                            if (obj_exis[y].fields.producto == obj_prod[i].pk) {
+                                for (let z = 0; z < obj_alm.length; z++) {
+                                    if (obj_alm[z].pk == obj_exis[y].fields.almacen) {
+                                        count += 1;
+                                        if (count == 1) {
+                                            document.getElementById('cantidad-product-old').value = obj_exis[y].fields.cantidad
+                                        }
+                                        let opt = document.createElement('option');
+                                        let nom_alm = document.createTextNode(obj_alm[z].fields.nombre + '');
+                                        opt.appendChild(nom_alm);
+                                        sel_alm.appendChild(opt);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
+            function click_almacen(){
+                let p = document.getElementById('select-product').value;
+                let a = document.getElementById('select-almacen').value;
+                flag = 0;
+                for (let i = 0; i < obj_prod.length; i++) {
+                    if (obj_prod[i].fields.nombre == p) {
+                        for (let y = 0; y < obj_exis.length; y++) {
+                            if (obj_exis[y].fields.producto == obj_prod[i].pk) {
+                                for (let z = 0; z < obj_alm.length; z++) {
+                                    if (obj_alm[z].fields.nombre == a && obj_alm[z].pk == obj_exis[y].fields.almacen) {
+                                        document.getElementById('cantidad-product-old').value = obj_exis[y].fields.cantidad
+                                        flag = 1;
+                                        break;
+                                    }
+                                }
+                                if (flag == 1){
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
+            rellenar_almacen();
+
+            sel_p.addEventListener('change', function () {
+                rellenar_almacen();
+            }, false);
+
+            sel_alm.addEventListener('change', function (){
+                click_almacen()
+            }, false);
+        }());
+    </script>
 
 {% endblock %}
