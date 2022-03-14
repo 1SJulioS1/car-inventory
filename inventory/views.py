@@ -148,6 +148,47 @@ def productos_almacen(request, pk):
                                                                 'almacen': Almacen.objects.get(id=int(pk)).nombre})
 
 
+def movimiento2(request):
+    js = serializers.get_serializer('json')()
+    prod = js.serialize(Producto.objects.all(), ensure_ascii=False)
+    almacen = js.serialize(Almacen.objects.all(), ensure_ascii=False)
+    existencia = js.serialize(Existencia.objects.all(), ensure_ascii=False)
+    if (request.method == "GET"):
+        return render(request, 'inventory/movimiento2.html',
+                      {'prod': prod, 'almacen': almacen, 'existencia': existencia})
+    else:
+        alm_origen_post = request.POST['almacen-origen']
+        alm_origen = Almacen.objects.get(nombre=alm_origen_post)
+        alm_destino_post = request.POST['almacen-destino']
+        alm_destino = Almacen.objects.get(nombre=alm_destino_post)
+        prod_post = request.POST['producto']
+        producto = Producto.objects.get(nombre=prod_post)
+        cant_new_post = int(request.POST['cant-mov'])
+        cant_old_post = int(request.POST['cantidad-disp'])
+        if (cant_old_post < cant_new_post):
+            messages.error(request,
+                           "Cantidad disponible menor que la que se quiere mover. Inserte otra")
+            return render(request, 'inventory/movimiento2.html',
+                          {'prod': prod, 'almacen': almacen, 'existencia': existencia})
+        else:
+            mov_instance = Movimiento(almacen_origen=alm_origen, almacen_destino=alm_destino,
+                                      producto=producto, cantidad=cant_new_post)
+            e = Existencia.objects.get(almacen=alm_origen, producto=producto)
+            e.cantidad -= cant_new_post
+            e.save()
+            mov_instance.save()
+            try:
+                e1 = Existencia.objects.get(almacen=alm_destino.id, producto=producto.id)
+            except:
+                e1 = Existencia(almacen=alm_destino, producto=producto, cantidad=cant_new_post)
+                e1.save()
+                return HttpResponseRedirect(reverse('inv:list_almacen'))
+            else:
+                e1.cantidad += cant_new_post
+                e1.save()
+                return HttpResponseRedirect(reverse('inv:list_almacen'))
+
+
 def movimiento(request):
     mov = MovimientoForm()
     context = {

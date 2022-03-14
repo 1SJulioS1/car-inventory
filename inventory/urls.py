@@ -23,7 +23,7 @@ urlpatterns = [
 
     path('', views.home, name='Home'),
     path('inst-almacen/<pk>/', views.productos_almacen, name="products_instruments"),
-    path('movimiento/', views.movimiento, name='Movimiento'),
+    path('movimiento/', views.movimiento2, name='Movimiento'),
     path('importar-venta/', views.import_venta, name='import_selling'),
     path('producto/', include(producto)),
     path('almacen/', include(almacen)),

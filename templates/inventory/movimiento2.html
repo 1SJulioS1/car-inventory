@@ -1,0 +1,193 @@
+{% extends 'inventory/base.html' %}
+{% block title %}
+    Movimiento
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <div class=" row ">
+        <div class="col-5 d-flex align-items-center justify-content-center">
+            <div class="col-5">
+                <h1>
+                    Transferencia de productos
+                </h1>
+            </div>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="row cd-flex align-items-center justify-content-center">
+                    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="True">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+
+        {% endif %}
+        <div class="col-5 d-flex align-items-center justify-content-center">
+            <div class="container f_back">
+                <form id="form-default" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="form-group col-5">
+                            <label for="almacen-origen">Almacén de origen</label>
+                            <select name="almacen-origen" id="almacen-origen" class="form-control"></select>
+                        </div>
+                        <div class="form-group col-5">
+                            <label for="almacen-destino">Almacén de destino</label>
+                            <select name="almacen-destino" id="almacen-destino" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-5">
+                            <label for="producto">Producto</label>
+                            <select name="producto" id="producto" class="form-control"></select>
+                        </div>
+                        <div class="form-group col-5">
+                            <label for="cantidad-disp">Cantidad disponible</label>
+                            <input type="text" name="cantidad-disp" id="cantidad-disp" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-5">
+                            <label for="cantidad-mov">Cantidad a mover</label>
+                            <input type="number" name="cant-mov" id="cantidad-mov" class="form-control">
+                        </div>
+                    </div>
+                    <div class=" d-flex align-items-center justify-content-center">
+                        <div class="form-group col-5">
+                            <button id="confirmar" type="submit" class="btn green">Aceptar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function () {
+            let obj_prod = text2json('{{ prod|escapejs }}');
+            let obj_alm = text2json('{{ almacen|escapejs }}');
+            let obj_exist = text2json('{{ existencia|escapejs }}');
+            let sel_alm_o = document.getElementById('almacen-origen');
+            let sel_alm_d = document.getElementById('almacen-destino');
+            let sel_prod = document.getElementById('producto');
+
+
+            function text2json(lista) {
+                var text = '';
+                for (let i = 0; i < lista.length; i++) {
+                    text += lista[i];
+                }
+                return JSON.parse(text)
+            }
+
+
+            for (let i = 0; i < obj_alm.length; i++) {
+                let opt = document.createElement('option');
+                let text = document.createTextNode(obj_alm[i].fields.nombre + '');
+                opt.appendChild(text);
+                sel_alm_o.appendChild(opt);
+                if (i != 0) {
+                    let text2 = document.createTextNode(obj_alm[i].fields.nombre + '');
+                    let opt2 = document.createElement('option');
+                    opt2.appendChild(text2);
+                    sel_alm_d.appendChild(opt2);
+                }
+
+                if (obj_alm[i].fields.nombre == sel_alm_o.value) {
+                    for (let j = 0; j < obj_exist.length; j++) {
+                        if (obj_exist[j].fields.almacen == obj_alm[i].pk) {
+                            for (let k = 0; k < obj_prod.length; k++) {
+                                if (obj_prod[k].pk == obj_exist[j].fields.producto) {
+                                    let opt = document.createElement('option');
+                                    let text = document.createTextNode(obj_prod[k].fields.nombre + '');
+                                    opt.appendChild(text);
+                                    sel_prod.appendChild(opt);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            for (let i = 0; i < obj_prod.length; i++) {
+                if (obj_prod[i].fields.nombre == sel_prod.value) {
+                    for (let j = 0; j < obj_exist.length; j++) {
+                        if (obj_exist[j].fields.producto == obj_prod[i].pk) {
+                            document.getElementById('cantidad-disp').value = obj_exist[j].fields.cantidad;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            function rellenar_destino() {
+                let origen = sel_alm_o.value;
+                while (sel_alm_d.lastElementChild) {
+                    sel_alm_d.removeChild(sel_alm_d.lastElementChild);
+                }
+                for (let i = 0; i < obj_alm.length; i++) {
+                    if (obj_alm[i].fields.nombre != origen) {
+                        let opt = document.createElement('option');
+                        let text = document.createTextNode(obj_alm[i].fields.nombre + '');
+                        opt.appendChild(text);
+                        sel_alm_d.appendChild(opt);
+                    }
+                }
+            }
+
+            function rellenar_producto() {
+                let origen = sel_alm_o.value;
+                while (sel_prod.lastElementChild) {
+                    sel_prod.removeChild(sel_prod.lastElementChild);
+                }
+                for (let i = 0; i < obj_alm.length; i++) {
+                    if (obj_alm[i].fields.nombre == origen) {
+                        for (let j = 0; j < obj_exist.length; j++) {
+                            if (obj_exist[j].fields.almacen == obj_alm[i].pk) {
+                                for (let k = 0; k < obj_prod.length; k++) {
+                                    if (obj_prod[k].pk == obj_exist[j].fields.producto) {
+                                        let opt = document.createElement('option');
+                                        let text = document.createTextNode(obj_prod[k].fields.nombre + '');
+                                        opt.appendChild(text);
+                                        sel_prod.appendChild(opt);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            function cant_disp() {
+                let prod = sel_prod.value;
+                for (let i = 0; i < obj_prod.length; i++) {
+                    if (obj_prod[i].fields.nombre == prod) {
+                        for (let j = 0; j < obj_exist.length; j++) {
+                            if (obj_exist[j].fields.producto == obj_prod[i].pk) {
+                                document.getElementById('cantidad-disp').value = obj_exist[j].fields.cantidad;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            sel_alm_o.addEventListener('change', function () {
+                rellenar_destino();
+                rellenar_producto();
+                cant_disp();
+            }, false);
+
+            sel_prod.addEventListener('change', function () {
+                cant_disp();
+            }, false);
+
+
+        }());
+    </script>>
+{% endblock %}
