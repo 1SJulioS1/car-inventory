@@ -303,3 +303,18 @@ def extract_product(request):
         e.save()
         p.save()
         return HttpResponseRedirect(reverse('inv:list_product'))
+
+
+def change_price(request):
+    js = serializers.get_serializer('json')()
+    producto = js.serialize(Producto.objects.all(), ensure_ascii=False)
+    if request.method == 'GET':
+        return render(request, 'inventory/producto/change_price.html', {'producto': producto})
+    else:
+        prod = request.POST['producto']
+        old_price = request.POST['old-price']
+        new_price = request.POST['new-price']
+        p = Producto.objects.get(nombre=prod)
+        p.precio_venta = int(new_price)
+        p.save()
+        return HttpResponseRedirect(reverse('inv:list_product'))

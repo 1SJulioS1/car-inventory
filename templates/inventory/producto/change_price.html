@@ -1,0 +1,103 @@
+{% extends 'inventory/base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}
+    Crear producto
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <div class="col-6">
+                <h1>
+                    Actualizar precio
+                </h1>
+            </div>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="row d-flex align-items-center justify-content-center">
+                    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="True">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+
+        {% endif %}
+
+        <div class="col-5 d-flex align-items-center justify-content-center">
+            <div class="container f_back">
+                <form id="form-default" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="form-group col-5">
+                            <label for="select-product">Producto</label>
+                            <select name="producto" id="select-product" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-5">
+                            <label for="old-price">Precio de venta anterior</label>
+                            <input type="text" name="old-price" id="old-price" readonly class="form-control">
+                        </div>
+                        <div class="form-group col-5">
+                            <label for="new-price">Precio de venta nuevo</label>
+                            <input type="text" name="new-price" id="new-price" class="form-control">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="form-actions right">
+                            <button type="reset" class="btn btn-default">Cancelar</button>
+                            <button id="confirmar" type="submit" class="btn green">Actualizar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            let obj_prod = text2json('{{ producto|escapejs }}');
+            let sel_prod = document.getElementById('select-product');
+            let old = document.getElementById('old-price');
+
+            function text2json(lista) {
+                var text = '';
+                for (let i = 0; i < lista.length; i++) {
+                    text += lista[i];
+                }
+                return JSON.parse(text);
+            }
+
+            for (let i = 0; i < obj_prod.length; i++) {
+                let opt = document.createElement('option');
+                let nom_prod = document.createTextNode(obj_prod[i].fields.nombre + '');
+                opt.appendChild(nom_prod);
+                sel_prod.appendChild(opt);
+            }
+
+            function rellenar_precio() {
+                let p = document.getElementById('select-product').value;
+                for (let i = 0; i < obj_prod.length; i++) {
+                    if (obj_prod[i].fields.nombre == p) {
+                        old.value = obj_prod[i].fields.precio_venta;
+                        break;
+                    }
+                }
+            }
+
+            old.value = obj_prod[0].fields.precio_venta;
+
+            sel_prod.addEventListener('change', function () {
+                rellenar_precio();
+            }, false);
+
+        }());
+
+    </script>
+
+{% endblock %}

@@ -9,6 +9,7 @@ producto = [
     path('listar-producto/', views.ProductoListView.as_view(), name="list_product"),
     path('productos-sin-exhibir/', views.stored_products, name="stored_products"),
     path('actualizar-producto/', views.extract_product, name="update_product_cant"),
+    path('actualizar-precio/', views.change_price, name="change_price"),
 ]
 
 almacen = [
