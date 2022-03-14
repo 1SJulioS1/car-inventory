@@ -28,6 +28,7 @@ def product(request):
     }
     if request.method == 'POST':
         producto_form = ProductoForm(request.POST)
+
         if producto_form.is_valid():
             nombre = producto_form.cleaned_data['nombre']
             cantidad = producto_form.cleaned_data['cantidad']
@@ -53,36 +54,32 @@ def product(request):
                     try:
                         e.save()
                     except:
-                        print("No existe el producto en el almacen")
                         # print("Error al guardar existencia")
                         pass
                 else:
-                    print("Existe el producto en el almacen")
                     messages.error(request, "Producto ya existente en el almacén " + almacen.nombre)
                     return render(request, 'inventory/producto/create_product.html')
             except:
-                print("Error  guardando producto")
                 return render(request, 'inventory/producto/create_product.html', context)
             else:
-                print("Agregado correctmamente")
+
                 return HttpResponseRedirect(reverse('inv:list_product'))
         else:
-            # Producto ya existente en el sistema
-            print("Error  guardando producto")
-            if Existencia.objects.all().filter(producto=Producto.objects.get(nombre=producto_form['nombre'].value()).id,
-                                               almacen=producto_form['almacen'].value()).count() > 0:
+
+            if Existencia.objects.filter(producto=Producto.objects.get(nombre=request.POST['nombre']),
+                                         almacen=Almacen.objects.get(id=request.POST['almacen'])).count() > 0:
                 messages.error(request, "Producto ya existente en el almacén " + Almacen.objects.get(
                     id=producto_form['almacen'].value()).nombre)
-                return render(request, 'inventory/producto/create_product.html', context)
+                return render(request, 'inventory/producto/create_product.html', {'form': producto_form})
+            else:
+                e = Existencia(producto=Producto.objects.get(nombre=producto_form['nombre'].value()),
+                               almacen=Almacen.objects.get(id=producto_form['almacen'].value()),
+                               cantidad=request.POST['cantidad'])
+                e.save()
+                return HttpResponseRedirect(reverse('inv:list_product'))
+
     else:
-        # print("Es un GET")
         return render(request, 'inventory/producto/create_product.html', context)
-
-
-# class ProductoDeleteView(DeleteView):
-#     model = Producto
-#     template_name = 'inventory/producto/delete_product.html'
-#     success_url = 'inv:list_product'
 
 
 class ProductoListView(ListView):
@@ -90,14 +87,6 @@ class ProductoListView(ListView):
     context_object_name = 'object'
     ordering = ['nombre']
     template_name = 'inventory/producto/list_product.html'
-
-
-#
-# class ProductoUpdateView(UpdateView):
-#     model = Producto
-#     form_class = ProductoUpdateForm
-#     template_name = 'inventory/producto/update_product.html'
-#     success_url = reverse_lazy('inv:list_product')
 
 
 class AlmacenCreateView(CreateView):
