@@ -189,57 +189,57 @@ def movimiento2(request):
                 return HttpResponseRedirect(reverse('inv:list_almacen'))
 
 
-def movimiento(request):
-    mov = MovimientoForm()
-    context = {
-        'form': mov,
-        'mess': ''
-    }
-    if request.method == "POST":
-        mov_form = MovimientoForm(request.POST)
-        if mov_form.is_valid():
-            origen = mov_form.cleaned_data['almacen_origen']
-            destino = mov_form.cleaned_data['almacen_destino']
-            producto = mov_form.cleaned_data['producto']
-            cantidad = mov_form.cleaned_data['cantidad']
-            if origen == destino:
-                context['mess'] = 'doubled'
-                return render(request, 'inventory/movimiento.html', context)
-            else:
-                if Existencia.objects.get(almacen=origen.id, producto=producto.id).cantidad > int(cantidad):
-                    mov_instance = Movimiento(almacen_origen=origen, almacen_destino=destino,
-                                              producto=producto, cantidad=int(cantidad))
-                    e = Existencia.objects.get(almacen=origen.id, producto=producto.id)
-                    e.cantidad -= int(cantidad)
-                    e.save()
-                    if Existencia.objects.filter(almacen=destino.id, producto=producto.id).count() == 0:
-                        print("No existe producto en el almacen")
-                        e = Existencia(almacen=destino, producto=producto, cantidad=cantidad)
-                        e.save()
-                        return HttpResponseRedirect(reverse('inv:list_almacen'))
-                    else:
-                        e = Existencia.objects.get(almacen=destino.id, producto=producto.id).cantidad
-                        e.cantidad += int(cantidad)
-                        e.save()
-                    try:
-                        mov_instance.save()
-                        return HttpResponseRedirect(reverse('inv:list_almacen'))
-                    except:
-                        return render(request, 'inventory/movimiento.html', context)
-                elif Existencia.objects.get(almacen=origen.id, producto=producto.id).cantidad == int(cantidad):
-                    Existencia.objects.get(almacen=origen.id, producto=producto.id).delete()
-                    e = Existencia.objects.get(almacen=destino.id, producto=producto.id).cantidad
-                    e.cantidad += int(cantidad)
-                    e.save()
-                    return render(request, 'inventory/almacen/create_almacen.html', context)
-                else:
-                    context['mess'] = 'err'
-                    return render(request, 'inventory/movimiento.html', context)
-        else:
-            return render(request, 'inventory/almacen/create_almacen.html', context)
-    else:
-        print("GET")
-        return render(request, "inventory/movimiento.html", context)
+# def movimiento(request):
+#     mov = MovimientoForm()
+#     context = {
+#         'form': mov,
+#         'mess': ''
+#     }
+#     if request.method == "POST":
+#         mov_form = MovimientoForm(request.POST)
+#         if mov_form.is_valid():
+#             origen = mov_form.cleaned_data['almacen_origen']
+#             destino = mov_form.cleaned_data['almacen_destino']
+#             producto = mov_form.cleaned_data['producto']
+#             cantidad = mov_form.cleaned_data['cantidad']
+#             if origen == destino:
+#                 context['mess'] = 'doubled'
+#                 return render(request, 'inventory/movimiento.html', context)
+#             else:
+#                 if Existencia.objects.get(almacen=origen.id, producto=producto.id).cantidad > int(cantidad):
+#                     mov_instance = Movimiento(almacen_origen=origen, almacen_destino=destino,
+#                                               producto=producto, cantidad=int(cantidad))
+#                     e = Existencia.objects.get(almacen=origen.id, producto=producto.id)
+#                     e.cantidad -= int(cantidad)
+#                     e.save()
+#                     if Existencia.objects.filter(almacen=destino.id, producto=producto.id).count() == 0:
+#                         print("No existe producto en el almacen")
+#                         e = Existencia(almacen=destino, producto=producto, cantidad=cantidad)
+#                         e.save()
+#                         return HttpResponseRedirect(reverse('inv:list_almacen'))
+#                     else:
+#                         e = Existencia.objects.get(almacen=destino.id, producto=producto.id).cantidad
+#                         e.cantidad += int(cantidad)
+#                         e.save()
+#                     try:
+#                         mov_instance.save()
+#                         return HttpResponseRedirect(reverse('inv:list_almacen'))
+#                     except:
+#                         return render(request, 'inventory/movimiento.html', context)
+#                 elif Existencia.objects.get(almacen=origen.id, producto=producto.id).cantidad == int(cantidad):
+#                     Existencia.objects.get(almacen=origen.id, producto=producto.id).delete()
+#                     e = Existencia.objects.get(almacen=destino.id, producto=producto.id).cantidad
+#                     e.cantidad += int(cantidad)
+#                     e.save()
+#                     return render(request, 'inventory/almacen/create_almacen.html', context)
+#                 else:
+#                     context['mess'] = 'err'
+#                     return render(request, 'inventory/movimiento.html', context)
+#         else:
+#             return render(request, 'inventory/almacen/create_almacen.html', context)
+#     else:
+#         print("GET")
+#         return render(request, "inventory/movimiento.html", context)
 
 
 def import_venta(request):
