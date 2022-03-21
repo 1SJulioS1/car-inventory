@@ -278,7 +278,8 @@ def extract_product(request):
             return render(request, 'inventory/producto/extract_product.html',
                           {'producto': producto, 'almacen': almacen, 'existencia': existencia})
         else:
-            if cant > int(request.POST['old-price']):
+            if cant > Existencia.objects.get(producto=Producto.objects.get(nombre=prod).id,
+                                             almacen=Almacen.objects.get(nombre=alm).id).cantidad:
                 messages.error(request, "Cantidad insuficiente para eliminar")
                 return render(request, 'inventory/producto/extract_product.html',
                               {'producto': producto, 'almacen': almacen, 'existencia': existencia})
@@ -307,7 +308,7 @@ def change_price(request):
             p.precio_venta = int(new_price)
         except ValueError:
             messages.error(request, "Campos faltantes en la actualización")
-            return render(request, 'inventory/ventas/create_sell.html',
+            return render(request, 'inventory/producto/change_price.html',
                           {'producto': producto})
         p.save()
         return HttpResponseRedirect(reverse('inv:list_product'))
