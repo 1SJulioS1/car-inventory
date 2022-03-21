@@ -1,23 +1,22 @@
 {% extends 'inventory/base.html' %}
-{% load crispy_forms_filters %}
 {% block title %}
-    Actualizar producto
-
+    Crear producto
 {% endblock %}
+
 
 {% block content %}
     <div class="row">
 
-        <div class="col-5 d-flex align-items-center justify-content-center">
-            <div class="col-5">
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <div class="col-6">
                 <h1>
-                    Actualizar producto
+                    Añadir venta
                 </h1>
             </div>
         </div>
         {% if messages %}
             {% for message in messages %}
-                <div class="row cd-flex align-items-center justify-content-center">
+                <div class="row d-flex align-items-center justify-content-center">
                     <div class="alert {{ message.tags }} alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="True">&times;</span>
@@ -28,38 +27,40 @@
             {% endfor %}
 
         {% endif %}
-
         <div class="col-5 d-flex align-items-center justify-content-center">
             <div class="container f_back">
                 <form id="form-default" method="post">
                     {% csrf_token %}
                     <div class="row">
                         <div class="form-group col-5">
-                            <label for="select-product">Producto</label>
-                            <select name="producto" id="select-product" class="form-control"></select>
-                        </div>
-                        <div class="form-group col-5">
                             <label for="select-almacen">Almacén</label>
                             <select name="almacen" id="select-almacen" class="form-control"></select>
                         </div>
-                    </div>
-                    <div class="row">
+                        <div class="form-group col-5">
+                            <label for="select-product">Producto</label>
+                            <select name="producto" id="select-product" class="form-control"></select>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-5">
-                            <label for="cantidad-product-old">Cantidad anterior</label>
-                            <input type="text" name="cantidad-old" id="cantidad-product-old" class="form-control"
-                                   readonly>
+                            <label for="cantidad">Cantidad existente</label>
+                            <input type="number" name="cantidad" id="cantidad" readonly class="form-control">
                         </div>
                         <div class="form-group col-5">
-                            <label for="cantidad-product-new">Cantidad a restar</label>
-                            <input type="text" name="cantidad-new" id="cantidad-product-new" class="form-control">
+                            <label for="cantidad-vendida">Cantidad vendida</label>
+                            <input type="number" name="cantidad-vendida" id="cantidad-vendida" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-5">
+                            <label for="fecha">Fecha</label>
+                            <input type="date" name="fecha" id="fecha" class="form-control">
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-center">
                         <div class="form-actions right">
                             <button type="reset" class="btn btn-default">Cancelar</button>
-                            <button id="confirmar" type="submit" class="btn green">Agregar</button>
+                            <button id="confirmar" type="submit" class="btn green">Actualizar</button>
                         </div>
                     </div>
                 </form>
@@ -69,9 +70,9 @@
     <script>
         (function () {
             let obj_prod = text2json('{{ producto|escapejs }}');
-            let obj_exis = text2json('{{ existencia|escapejs }}');
             let obj_alm = text2json('{{ almacen|escapejs }}');
-            let sel_p = document.getElementById('select-product');
+            let obj_exist = text2json('{{ existencia|escapejs }}');
+            let sel_prod = document.getElementById('select-product');
             let sel_alm = document.getElementById('select-almacen');
 
             function text2json(lista) {
@@ -79,40 +80,36 @@
                 for (let i = 0; i < lista.length; i++) {
                     text += lista[i];
                 }
-                return JSON.parse(text)
+                return JSON.parse(text);
             }
 
-            let prod = '';
-            for (let i = 0; i < obj_prod.length; i++) {
-                if (i == 0) {
-                    prod = obj_prod[i].fields.nombre + '';
-                }
+            for (let i = 0; i < obj_alm.length; i++) {
                 let opt = document.createElement('option');
-                let text = document.createTextNode(obj_prod[i].fields.nombre + '');
-                opt.appendChild(text);
-                sel_p.appendChild(opt);
+                let nom_alm = document.createTextNode(obj_alm[i].fields.nombre + '');
+                opt.appendChild(nom_alm);
+                sel_alm.appendChild(opt);
             }
 
-            function rellenar_almacen() {
-                let p = document.getElementById('select-product').value;
-                while (sel_alm.lastElementChild != null) {
-                    sel_alm.removeChild(sel_alm.lastElementChild);
+            function rellenar_producto() {
+                let p = document.getElementById('select-almacen').value;
+                while (sel_prod.lastElementChild != null) {
+                    sel_prod.removeChild(sel_prod.lastElementChild);
                 }
                 count = 0;
-                for (let i = 0; i < obj_prod.length; i++) {
-                    if (obj_prod[i].fields.nombre == p) {
-                        for (let y = 0; y < obj_exis.length; y++) {
-                            if (obj_exis[y].fields.producto == obj_prod[i].pk) {
-                                for (let z = 0; z < obj_alm.length; z++) {
-                                    if (obj_alm[z].pk == obj_exis[y].fields.almacen) {
+                for (let r = 0; r < obj_alm.length; r++) {
+                    if (obj_alm[r].fields.nombre == p) {
+                        for (let y = 0; y < obj_exist.length; y++) {
+                            if (obj_exist[y].fields.almacen == obj_alm[r].pk) {
+                                for (let z = 0; z < obj_prod.length; z++) {
+                                    if (obj_exist[y].fields.producto == obj_prod[z].pk) {
                                         count += 1;
                                         if (count == 1) {
-                                            document.getElementById('cantidad-product-old').value = obj_exis[y].fields.cantidad
+                                            document.getElementById('cantidad').value = obj_exist[y].fields.cantidad;
                                         }
                                         let opt = document.createElement('option');
-                                        let nom_alm = document.createTextNode(obj_alm[z].fields.nombre + '');
-                                        opt.appendChild(nom_alm);
-                                        sel_alm.appendChild(opt);
+                                        let nom_prod = document.createTextNode(obj_prod[z].fields.nombre + '');
+                                        opt.appendChild(nom_prod);
+                                        sel_prod.appendChild(opt);
                                         break;
                                     }
                                 }
@@ -123,17 +120,19 @@
                 }
             }
 
-            function click_almacen() {
+
+            function click_prod() {
                 let p = document.getElementById('select-product').value;
                 let a = document.getElementById('select-almacen').value;
                 flag = 0;
                 for (let i = 0; i < obj_prod.length; i++) {
                     if (obj_prod[i].fields.nombre == p) {
-                        for (let y = 0; y < obj_exis.length; y++) {
-                            if (obj_exis[y].fields.producto == obj_prod[i].pk) {
+                        for (let y = 0; y < obj_exist.length; y++) {
+                            if (obj_exist[y].fields.producto == obj_prod[i].pk) {
                                 for (let z = 0; z < obj_alm.length; z++) {
-                                    if (obj_alm[z].fields.nombre == a && obj_alm[z].pk == obj_exis[y].fields.almacen) {
-                                        document.getElementById('cantidad-product-old').value = obj_exis[y].fields.cantidad
+                                    if (obj_alm[z].fields.nombre == a && obj_alm[z].pk == obj_exist[y].fields.almacen) {
+
+                                        document.getElementById('cantidad').value = obj_exist[y].fields.cantidad
                                         flag = 1;
                                         break;
                                     }
@@ -148,16 +147,14 @@
                 }
             }
 
-            rellenar_almacen();
-
-            sel_p.addEventListener('change', function () {
-                rellenar_almacen();
-            }, false);
+            rellenar_producto();
 
             sel_alm.addEventListener('change', function () {
-                click_almacen();
+                rellenar_producto();
+            }, false);
+            sel_prod.addEventListener('change', function () {
+                click_prod();
             }, false);
         }());
     </script>
-
 {% endblock %}

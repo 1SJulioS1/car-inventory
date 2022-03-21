@@ -19,6 +19,10 @@ almacen = [
     path('listar-almacen/', views.AlmacenListView.as_view(), name="list_almacen"),
 ]
 
+venta = [
+    path('crear-venta/',views.create_sell,name="crear_venta")
+
+]
 urlpatterns = [
 
     path('', views.home, name='Home'),
@@ -27,5 +31,6 @@ urlpatterns = [
     path('importar-venta/', views.import_venta, name='import_selling'),
     path('producto/', include(producto)),
     path('almacen/', include(almacen)),
+    path('venta/',include(venta)),
     path("ventas_periodo_form/", views.ventas_periodo, name="selling_period_form")
 ]

@@ -295,3 +295,34 @@ def change_price(request):
         p.precio_venta = int(new_price)
         p.save()
         return HttpResponseRedirect(reverse('inv:list_product'))
+
+
+def create_sell(request):
+    js = serializers.get_serializer('json')()
+    almacen = js.serialize(Almacen.objects.all())
+    producto = js.serialize(Producto.objects.all())
+    existencia = js.serialize(Existencia.objects.all())
+    if request.method == 'GET':
+        return render(request, 'inventory/venta/create_sell.html',
+                      {'almacen': almacen, 'producto': producto, 'existencia': existencia})
+    else:
+        prod = request.POST['producto']
+        alm = request.POST['almacen']
+        cantidad = int(request.POST['cantidad'])
+        cantidad_vendida = int(request.POST['cantidad-vendida'])
+        if cantidad_vendida > cantidad:
+            messages.error(request, "Cantidad vendida mayor que la existente en el almacen")
+            return render(request, 'inventory/venta/create_sell.html',
+                          {'almacen': almacen, 'producto': producto, 'existencia': existencia})
+        fecha = request.POST['fecha']
+        p = Producto.objects.get(nombre=prod)
+        exist = Existencia.objects.get(producto=p.id,
+                                       almacen=Almacen.objects.get(nombre=alm).id)
+
+        v = Ventas(cantidad=int(cantidad), fecha=fecha, existencia=exist)
+        v.save()
+        exist.cantidad -= cantidad_vendida
+        exist.save()
+        p.cantidad -= cantidad_vendida
+        p.save()
+        return HttpResponseRedirect(reverse('inv:Home'))
