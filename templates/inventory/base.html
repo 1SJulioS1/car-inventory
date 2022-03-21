@@ -17,128 +17,134 @@
 
 <body>
 
-    <h1 class="site-heading text-right d-none d-lg-block">
-        <span class="site-heading-lower">Gestión de Inventario</span>
-    </h1>
+<h1 class="site-heading text-right d-none d-lg-block">
+    <span class="site-heading-lower">Gestión de Inventario</span>
+</h1>
 
-    <nav class="navbar navbar-expand-lg navbar-dark py-lg-4 " id="mainNav">
-        <div class="container">
-            <div class="row">
-                <nav class="navbar navbar-light navbar-expand-lg mainmenu">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+<nav class="navbar navbar-expand-lg navbar-dark py-lg-4 " id="mainNav">
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-light navbar-expand-lg mainmenu">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="btn-group collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase"
-                                    href="{% url 'inv:Home' %}">Inicio</a>
-                            </li>
-                            <li class="nav-item dropdown px-lg-4">
-                                <a class="nav-link text-uppercase text-expanded dropdown-toggle" href="#"
-                                    id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">Inventario</a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li class="dropdown-submenu">
-                                        <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">Productos</a>
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <li><a class="nav-link dropdown-item text-uppercase text-expanded"
-                                                    href="{% url 'inv:create_product' %}">Crear productos</a></li>
-                                            <li><a class="nav-link dropdown-item text-uppercase text-expanded"
-                                                    href="{% url 'inv:list_product' %}">Listar productos</a></li>
-                                            <li><a class="nav-link dropdown-item text-uppercase text-expanded"
-                                                    href="{% url 'inv:update_product_cant' %}">Actualizar cantidad</a>
-                                            </li>
-                                            <li><a class="nav-link dropdown-item text-uppercase text-expanded"
-                                                    href="{% url 'inv:change_price' %}">Actualizar precio</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">Almacén</a>
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <li><a class="nav-link dropdown-item text-uppercase text-expanded"
-                                                    href="{% url 'inv:create_almacen' %}">Crear almacén</a></li>
-                                            <li><a class="nav-link dropdown-item text-uppercase text-expanded"
-                                                    href="{% url 'inv:update_almacen_list' %}">Actualizar almacén</a>
-                                            </li>
-                                            <li><a class="nav-link dropdown-item text-uppercase text-expanded"
-                                                    href="{% url 'inv:list_almacen' %}">Listar almacén</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown px-lg-4">
-                                <a class="nav-link text-uppercase text-expanded dropdown-toggle" href="#"
-                                    id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">Operaciones</a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li class="dropdown">
-                                    <li><a class="nav-link text-uppercase"
-                                            href="#">Recepción</a></li>
-                                    <li><a class="nav-link text-uppercase" href="{% url 'inv:crear_venta' %}">Venta</a></li>
-                                    <li><a class="nav-link text-uppercase"
-                                            href="{% url 'inv:Movimiento' %}">Transferencia</a>
-                                    </li>
-                                </ul>
-                            </li>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="btn-group collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase"
+                                                        href="{% url 'inv:Home' %}">Inicio</a>
+                        </li>
+                        <li class="nav-item dropdown px-lg-4">
+                            <a class="nav-link text-uppercase text-expanded dropdown-toggle" href="#"
+                               id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">Inventario</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li class="dropdown-submenu">
+                                    <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown"
+                                       role="button" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">Productos</a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
+                                               href="{% url 'inv:create_product' %}">Crear productos</a></li>
+                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
+                                               href="{% url 'inv:list_product' %}">Listar productos</a></li>
+                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
+                                               href="{% url 'inv:update_product_cant' %}">Actualizar cantidad</a>
+                                        </li>
+                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
+                                               href="{% url 'inv:change_price' %}">Actualizar precio</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown"
+                                       role="button" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">Almacén</a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
+                                               href="{% url 'inv:create_almacen' %}">Crear almacén</a></li>
+                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
+                                               href="{% url 'inv:update_almacen_list' %}">Actualizar almacén</a>
+                                        </li>
+                                        <li><a class="nav-link dropdown-item text-uppercase text-expanded"
+                                               href="{% url 'inv:list_almacen' %}">Listar almacén</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown px-lg-4">
+                            <a class="nav-link text-uppercase text-expanded dropdown-toggle" href="#"
+                               id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">Operaciones</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li class="dropdown">
+                                <li><a class="nav-link text-uppercase"
+                                       href="#">Recepción</a></li>
+                                <li><a class="nav-link text-uppercase" href="{% url 'inv:crear_venta' %}">Venta</a></li>
+                                <li><a class="nav-link text-uppercase"
+                                       href="{% url 'inv:Movimiento' %}">Transferencia</a>
+                                </li>
+                            </ul>
+                        </li>
 
-                            <li class="nav-item dropdown px-lg-4">
-                                <a class="nav-link text-uppercase text-expanded dropdown-toggle" href="#"
-                                    id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">Informes</a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li class="dropdown">
-                                    <li><a class="nav-link text-uppercase"
-                                            href="{% url 'inv:selling_period_form' %}">Ventas por período</a></li>
-                                    <li><a class="nav-link text-uppercase" href="{% url 'inv:list_product' %}">Lista de
-                                            productos</a>
-                                    </li>
-                                    <li><a class="nav-link text-uppercase"
-                                            href="{% url 'inv:stored_products' %}">Productos
-                                            sin
-                                            exhibir</a>
-                                    </li>
+                        <li class="nav-item dropdown px-lg-4">
+                            <a class="nav-link text-uppercase text-expanded dropdown-toggle" href="#"
+                               id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">Informes</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li class="dropdown">
+                                <li><a class="nav-link text-uppercase"
+                                       href="{% url 'inv:selling_period_form' %}">Ventas por período</a></li>
+                                <li><a class="nav-link text-uppercase" href="{% url 'inv:list_product' %}">Lista de
+                                    productos</a>
+                                </li>
+                                <li><a class="nav-link text-uppercase"
+                                       href="{% url 'inv:stored_products' %}">Productos
+                                    sin
+                                    exhibir</a>
+                                </li>
+                                <li><a class="nav-link text-uppercase"
+                                       href="{% url 'inv:productos_agotados' %}">Productos agotados</a>
+                                </li>
+                                <li><a class="nav-link text-uppercase"
+                                       href="{% url 'inv:productos_agotados_almacen' %}">Productos agotados por almacen</a>
+                                </li>
 
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    {% block content %}
+{% block content %}
 
-    {% endblock %}
+{% endblock %}
 
-    <footer class="footer text-faded text-center py-5">
-        <div class="container">
-            <p class="m-0 mbt1">&copy; Gestión de Inventario <span id="year"></span></p>
-            {% now "Y" %}
-        </div>
+<footer class="footer text-faded text-center py-5">
+    <div class="container">
+        <p class="m-0 mbt1">&copy; Gestión de Inventario <span id="year"></span></p>
+        {% now "Y" %}
+    </div>
 
-    </footer>
-    <script src="{% static 'inventory/vendor/js/jquery-3.5.1.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/js/jquery.dataTables.min.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/js/dataTables.bootstrap4.min.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/js/dataTables.buttons.min.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/js/buttons.bootstrap4.min.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/js/jszip.min.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/js/pdfmake.min.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/js/vfs_fonts.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/js/buttons.html5.min.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/js/buttons.print.min.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/js/buttons.colVis.min.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/js/bootstrap.bundle.min.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/js/bootstrap.min.js ' %}"></script>
-    <script src="{% static 'inventory/vendor/custom.js' %}"></script>
+</footer>
+<script src="{% static 'inventory/vendor/js/jquery-3.5.1.js ' %}"></script>
+<script src="{% static 'inventory/vendor/js/jquery.dataTables.min.js ' %}"></script>
+<script src="{% static 'inventory/vendor/js/dataTables.bootstrap4.min.js ' %}"></script>
+<script src="{% static 'inventory/vendor/js/dataTables.buttons.min.js ' %}"></script>
+<script src="{% static 'inventory/vendor/js/buttons.bootstrap4.min.js ' %}"></script>
+<script src="{% static 'inventory/vendor/js/jszip.min.js ' %}"></script>
+<script src="{% static 'inventory/vendor/js/pdfmake.min.js ' %}"></script>
+<script src="{% static 'inventory/vendor/js/vfs_fonts.js ' %}"></script>
+<script src="{% static 'inventory/vendor/js/buttons.html5.min.js ' %}"></script>
+<script src="{% static 'inventory/vendor/js/buttons.print.min.js ' %}"></script>
+<script src="{% static 'inventory/vendor/js/buttons.colVis.min.js ' %}"></script>
+<script src="{% static 'inventory/vendor/js/bootstrap.bundle.min.js ' %}"></script>
+<script src="{% static 'inventory/vendor/js/bootstrap.min.js ' %}"></script>
+<script src="{% static 'inventory/vendor/custom.js' %}"></script>
 </body>
 
 </html>

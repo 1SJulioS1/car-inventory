@@ -303,7 +303,7 @@ def create_sell(request):
     producto = js.serialize(Producto.objects.all())
     existencia = js.serialize(Existencia.objects.all())
     if request.method == 'GET':
-        return render(request, 'inventory/venta/create_sell.html',
+        return render(request, 'inventory/ventas/create_sell.html',
                       {'almacen': almacen, 'producto': producto, 'existencia': existencia})
     else:
         prod = request.POST['producto']
@@ -312,17 +312,40 @@ def create_sell(request):
         cantidad_vendida = int(request.POST['cantidad-vendida'])
         if cantidad_vendida > cantidad:
             messages.error(request, "Cantidad vendida mayor que la existente en el almacen")
-            return render(request, 'inventory/venta/create_sell.html',
+            return render(request, 'inventory/ventas/create_sell.html',
                           {'almacen': almacen, 'producto': producto, 'existencia': existencia})
         fecha = request.POST['fecha']
         p = Producto.objects.get(nombre=prod)
         exist = Existencia.objects.get(producto=p.id,
                                        almacen=Almacen.objects.get(nombre=alm).id)
-
         v = Ventas(cantidad=int(cantidad), fecha=fecha, existencia=exist)
-        v.save()
-        exist.cantidad -= cantidad_vendida
-        exist.save()
-        p.cantidad -= cantidad_vendida
-        p.save()
-        return HttpResponseRedirect(reverse('inv:Home'))
+        try:
+            v.save()
+        except:
+            messages.error(request, "Campos faltantes en la venta")
+            return render(request, 'inventory/ventas/create_sell.html',
+                          {'almacen': almacen, 'producto': producto, 'existencia': existencia})
+        else:
+            exist.cantidad -= cantidad_vendida
+            exist.save()
+            p.cantidad -= cantidad_vendida
+            p.save()
+            return HttpResponseRedirect(reverse('inv:Home'))
+
+
+def productos_agotados(request):
+    if request.method == 'GET':
+        return render(request, 'inventory/producto/productos_agotados.html',
+                      {'producto': Producto.objects.filter(cantidad=0)})
+
+
+def productos_agotados_almacen(request):
+    if request.method == 'GET':
+        res = []
+        for i in Producto.objects.filter(existencia__cantidad=0):
+            for e in Existencia.objects.filter(cantidad=0):
+                if i.id == e.producto.id:
+                    t = tuple((Almacen.objects.get(id=e.almacen.id).nombre, i.nombre))
+                    res.append(t)
+
+        return render(request, 'inventory/producto/productos_agotados_alm.html', {'res': res})

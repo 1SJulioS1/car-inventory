@@ -20,8 +20,14 @@ almacen = [
 ]
 
 venta = [
-    path('crear-venta/',views.create_sell,name="crear_venta")
+    path('crear-venta/', views.create_sell, name="crear_venta")
 
+]
+
+consultas = [
+    path('ventas_periodo/', views.ventas_periodo, name="selling_period_form"),
+    path('productos_agotados/', views.productos_agotados, name="productos_agotados"),
+    path('productos_agotados_almacen/', views.productos_agotados_almacen, name="productos_agotados_almacen"),
 ]
 urlpatterns = [
 
@@ -31,6 +37,7 @@ urlpatterns = [
     path('importar-venta/', views.import_venta, name='import_selling'),
     path('producto/', include(producto)),
     path('almacen/', include(almacen)),
-    path('venta/',include(venta)),
-    path("ventas_periodo_form/", views.ventas_periodo, name="selling_period_form")
+    path('venta/', include(venta)),
+    path('consultas/', include(consultas))
+
 ]
