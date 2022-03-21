@@ -7,15 +7,13 @@
 
 {% block content %}
     <div class=" row ">
-        <div class="col-5 d-flex align-items-center justify-content-center">
+        <div class="col-6 d-flex align-items-center justify-content-center">
             <div class="col-5">
                 <h1>
                     Transferencia de productos
                 </h1>
-            </div>
-        </div>
-        {% if messages %}
-            {% for message in messages %}
+                {% if messages %}
+                {% for message in messages %}
                 <div class="row cd-flex align-items-center justify-content-center">
                     <div class="alert {{ message.tags }} alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -24,9 +22,11 @@
                         {{ message }}
                     </div>
                 </div>
-            {% endfor %}
-
-        {% endif %}
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        
         <div class="col-5 d-flex align-items-center justify-content-center">
             <div class="container f_back">
                 <form id="form-default" method="post">
