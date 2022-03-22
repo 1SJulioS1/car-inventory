@@ -22,13 +22,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for f in productos %}
+                    {% for nombre,cantidad,precio_costo,precio_venta in productos %}
                         <tr>
-                            <td><a>{{ f.nombre }}</a></td>
-                            <td><a>{{ f.cantidad }}</a></td>
-                            <td><a>{{ f.precio_costo }}</a></td>
-                            <td><a>{{ f.precio_venta }}</a></td>
-                        </tr>
+                            <td><a>{{ nombre }}</a></td>
+                            <td><a>{{ cantidad }}</a></td>
+                            <td><a>{{ precio_costo }}</a></td>
+                            <td><a>{{ precio_venta }}</a></td>
+                        </tr>                    
                     {% endfor %}
                     </tbody>
                 </table>

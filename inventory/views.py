@@ -254,8 +254,7 @@ def stored_products(request):
         existencia = Existencia.objects.all()
         for e in existencia:
             if e.almacen.es_central == 'Almacén central':
-                p.append(e.producto)
-        print("Productos sin exhibir :" + str(p))
+                p.append(tuple((e.producto.nombre,e.cantidad,e.producto.precio_costo,e.producto.precio_venta)))        
         return render(request, 'inventory/productos_sin_exhibir.html', {'productos': p})
 
 
@@ -325,29 +324,36 @@ def create_sell(request):
     else:
         prod = request.POST['producto']
         alm = request.POST['almacen']
+        
         cantidad = int(request.POST['cantidad'])
-        cantidad_vendida = int(request.POST['cantidad-vendida'])
-        if cantidad_vendida > cantidad:
-            messages.error(request, "Cantidad vendida mayor que la existente en el almacen")
-            return render(request, 'inventory/ventas/create_sell.html',
-                          {'almacen': almacen, 'producto': producto, 'existencia': existencia})
-        fecha = request.POST['fecha']
-        p = Producto.objects.get(nombre=prod)
-        exist = Existencia.objects.get(producto=p.id,
-                                       almacen=Almacen.objects.get(nombre=alm).id)
-        v = Ventas(cantidad=int(cantidad), fecha=fecha, existencia=exist)
         try:
-            v.save()
-        except:
+            cantidad_vendida = int(request.POST['cantidad-vendida'])
+        except ValueError:
             messages.error(request, "Campos faltantes en la venta")
             return render(request, 'inventory/ventas/create_sell.html',
-                          {'almacen': almacen, 'producto': producto, 'existencia': existencia})
+                            {'almacen': almacen, 'producto': producto, 'existencia': existencia})
         else:
-            exist.cantidad -= cantidad_vendida
-            exist.save()
-            p.cantidad -= cantidad_vendida
-            p.save()
-            return HttpResponseRedirect(reverse('inv:Home'))
+            if cantidad_vendida > cantidad:
+                messages.error(request, "Cantidad vendida mayor que la existente en el almacen")
+                return render(request, 'inventory/ventas/create_sell.html',
+                            {'almacen': almacen, 'producto': producto, 'existencia': existencia})
+            fecha = request.POST['fecha']
+            p = Producto.objects.get(nombre=prod)
+            exist = Existencia.objects.get(producto=p.id,
+                                        almacen=Almacen.objects.get(nombre=alm).id)
+            v = Ventas(cantidad=int(cantidad), fecha=fecha, existencia=exist)
+            try:
+                v.save()
+            except:
+                messages.error(request, "Campos faltantes en la venta")
+                return render(request, 'inventory/ventas/create_sell.html',
+                            {'almacen': almacen, 'producto': producto, 'existencia': existencia})
+            else:
+                exist.cantidad -= cantidad_vendida
+                exist.save()
+                p.cantidad -= cantidad_vendida
+                p.save()
+                return HttpResponseRedirect(reverse('inv:Home'))
 
 
 def productos_agotados(request):
